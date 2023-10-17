@@ -1,9 +1,13 @@
-import { lazy, Suspense } from 'react';
+import { useSelector } from 'react-redux';
+import { lazy, useMemo, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
+
+import { isTokenExpried } from 'src/utils/jsonwebtoken';
 
 import DashboardLayout from 'src/layouts/dashboard';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
+export const CategoryViewPage = lazy(() => import('src/pages/category-view'));
 export const BlogPage = lazy(() => import('src/pages/blog'));
 export const UserPage = lazy(() => import('src/pages/user'));
 export const LoginPage = lazy(() => import('src/pages/login'));
@@ -13,6 +17,8 @@ export const Page404 = lazy(() => import('src/pages/page-not-found'));
 // ----------------------------------------------------------------------
 
 export default function Router() {
+  const user = useSelector((state) => state.user);
+  const ISTOKENEXRIED = useMemo(() => isTokenExpried(user?.token), [user]);
   const routes = useRoutes([
     {
       element: (
@@ -27,11 +33,8 @@ export default function Router() {
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
+        { path: 'category/:id', element: <CategoryViewPage /> },
       ],
-    },
-    {
-      path: 'login',
-      element: <LoginPage />,
     },
     {
       path: '404',
@@ -43,5 +46,5 @@ export default function Router() {
     },
   ]);
 
-  return routes;
+  return user?.isAuthenticated && ISTOKENEXRIED ? routes : <LoginPage />;
 }
