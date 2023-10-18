@@ -37,7 +37,7 @@ export const CATEGORYApiReq = baseApi.injectEndpoints({
 
     deleteCategory: mutation({
       query: (arg) => ({
-        url: `${CATEGORY.CREATE}/${arg.id}`,
+        url: `${CATEGORY.DELETE}/${arg.id}`,
         method: 'DELETE',
       }),
       invalidatesTags: (_, error) => (error ? [] : ['CATEGORY']),

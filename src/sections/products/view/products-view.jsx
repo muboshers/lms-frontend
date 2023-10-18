@@ -1,21 +1,34 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
+import { Button } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 
-import { products } from 'src/_mock/products';
+import { useGetProductQuery } from 'src/api/product-api-req';
+import { useGetCategoryQuery } from 'src/api/category-api.req';
 
 import ProductCard from '../product-card';
-import ProductSort from '../product-sort';
 import ProductFilters from '../product-filters';
-import ProductCartWidget from '../product-cart-widget';
+import ProductCardLoader from '../product-card-loader';
 
 // ----------------------------------------------------------------------
 
 export default function ProductsView() {
+  const [page, setPage] = useState(1);
+  const [clonedData, setClonedData] = useState([]);
+  const { data: categories } = useGetCategoryQuery({}, {});
+  const { data, isLoading, isFetching } = useGetProductQuery(
+    {
+      page,
+    },
+    {}
+  );
+
   const [openFilter, setOpenFilter] = useState(false);
+
+  const productLoading = isLoading || isFetching;
 
   const handleOpenFilter = () => {
     setOpenFilter(true);
@@ -25,12 +38,45 @@ export default function ProductsView() {
     setOpenFilter(false);
   };
 
+  const nextPage = () => {
+    if (page <= data?.totalPages) setPage(page + 1);
+  };
+
+  useEffect(() => {
+    if (data?.data) setClonedData([...clonedData, ...data.data]);
+
+    return () => {
+      setClonedData([]);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  const renderProductCard = (
+    <Grid container spacing={3}>
+      {productLoading
+        ? new Array(8).fill(',').map((_, index) => (
+            <Grid item sx={12} sm={6} md={3} key={index}>
+              <ProductCardLoader />
+            </Grid>
+          ))
+        : clonedData.map((product) => (
+            <Grid key={product._id} xs={12} sm={6} md={3}>
+              <ProductCard product={product} />
+            </Grid>
+          ))}
+    </Grid>
+  );
+
   return (
     <Container>
-      <Typography variant="h4" sx={{ mb: 5 }}>
-        Mahsulotlar
-      </Typography>
-
+      <Stack flexDirection="row" alignItems="center" justifyContent="space-between">
+        <Typography variant="h4" sx={{ mb: 5 }}>
+          Mahsulotlar
+        </Typography>
+        <Button type="button" variant="contained">
+          Mahsulot qo&apos;shish
+        </Button>
+      </Stack>
       <Stack
         direction="row"
         alignItems="center"
@@ -40,24 +86,27 @@ export default function ProductsView() {
       >
         <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
           <ProductFilters
+            categories={categories}
             openFilter={openFilter}
             onOpenFilter={handleOpenFilter}
             onCloseFilter={handleCloseFilter}
           />
-
-          <ProductSort />
         </Stack>
       </Stack>
-
-      <Grid container spacing={3}>
-        {products.map((product) => (
-          <Grid key={product.id} xs={12} sm={6} md={3}>
-            <ProductCard product={product} />
-          </Grid>
-        ))}
-      </Grid>
-
-      <ProductCartWidget />
+      {renderProductCard}
+      {page < data?.totalPages && (
+        <Button
+          onClick={nextPage}
+          variant="contained"
+          sx={{
+            marginTop: 3,
+            display: 'block',
+            marginX: 'auto',
+          }}
+        >
+          Show More
+        </Button>
+      )}
     </Container>
   );
 }
