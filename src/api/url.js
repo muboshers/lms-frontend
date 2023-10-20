@@ -18,7 +18,9 @@ export const PRODUCT = {
   DELETE: 'product',
 };
 
-
 export const COLORS = {
-  LIST:'color'
-}
+  LIST: 'color',
+  CREATE: 'color',
+  UPDATE: 'color',
+  DELETE: 'color',
+};

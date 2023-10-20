@@ -5,16 +5,16 @@ import toast from 'react-hot-toast';
 import { LoadingButton } from '@mui/lab';
 import { Dialog, Button, Typography, DialogActions, DialogContent } from '@mui/material';
 
-import { useDeleteCategoryMutation } from 'src/api/category-api.req';
+import { useDeleteColorsMutation } from 'src/api/color-api-req';
 
-export default function CategoryDeleteModal({ id, open, onClose, setId }) {
-  const [deleteCategory, delRes] = useDeleteCategoryMutation();
+export default function ColoryDeleteModal({ id, open, onClose, setId }) {
+  const [deleteColor, delRes] = useDeleteColorsMutation();
   const handleDelete = async () => {
     if (!id) return;
-    await deleteCategory({ id })
+    await deleteColor({ id })
       .unwrap()
       .then(() => {
-        toast.success("Kategoriya o'chirildi");
+        toast.success("Rang o'chirildi");
         onClose();
       });
   };
@@ -46,9 +46,9 @@ export default function CategoryDeleteModal({ id, open, onClose, setId }) {
   );
 }
 
-CategoryDeleteModal.propTypes = {
+ColoryDeleteModal.propTypes = {
   open: PropTypes.bool,
   id: PropTypes.string,
-  onClose: PropTypes.func,
-  setId: PropTypes.func,
+  onClose: PropTypes.any,
+  setId: PropTypes.any,
 };

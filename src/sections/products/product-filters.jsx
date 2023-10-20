@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 
 import {
   Box,
@@ -30,38 +31,44 @@ export default function ProductFilters({
   categories,
   colors,
 }) {
-  // eslint-disable-next-line no-unused-vars
   const { push } = useRouter();
-
+  const location = useLocation();
   const [categoriesSearch, setCategoriesSearch] = useState([]);
   const [colorSearch, setColorSearch] = useState([]);
 
   const catOnChange = (event, id, index) => {
-    let clonedCategoriesSearch = [...categoriesSearch];
-
     const isChecked = event.target.checked;
 
-    if (isChecked) {
-      clonedCategoriesSearch[index] = id;
-    } else {
-      clonedCategoriesSearch = clonedCategoriesSearch.filter((catId) => catId !== id);
-    }
+    setCategoriesSearch((prevCategoriesSearch) => {
+      const clonedCategoriesSearch = [...prevCategoriesSearch];
 
-    setCategoriesSearch(clonedCategoriesSearch);
+      if (isChecked) {
+        clonedCategoriesSearch.splice(index, 0, id);
+      } else {
+        const catIndex = clonedCategoriesSearch.indexOf(id);
+        if (catIndex !== -1) {
+          clonedCategoriesSearch.splice(catIndex, 1);
+        }
+      }
+      return clonedCategoriesSearch;
+    });
   };
 
   const colorOnChange = (event, id, index) => {
-    let clonedColorSearch = [...categoriesSearch];
-
     const isChecked = event.target.checked;
+    setColorSearch((prevColorSearch) => {
+      const clonedColorSearch = [...prevColorSearch];
 
-    if (isChecked) {
-      clonedColorSearch[index] = id;
-    } else {
-      clonedColorSearch = clonedColorSearch.filter((catId) => catId !== id);
-    }
-
-    setColorSearch(clonedColorSearch);
+      if (isChecked) {
+        clonedColorSearch.splice(index, 0, id);
+      } else {
+        const catIndex = clonedColorSearch.indexOf(id);
+        if (catIndex !== -1) {
+          clonedColorSearch.splice(catIndex, 1);
+        }
+      }
+      return clonedColorSearch;
+    });
   };
 
   const resetFilter = () => {
@@ -81,7 +88,6 @@ export default function ProductFilters({
           categoryQuery += `categoryId=${categoryId}&`;
         });
     }
-
     if (colorSearch.length >= 1) {
       colorSearch
         .filter((item) => !!item)
@@ -110,8 +116,9 @@ export default function ProductFilters({
                     onChange={(event) => catOnChange(event, cat?._id, index)}
                     key={cat?._id}
                     control={<Checkbox />}
-                    checked={categoriesSearch[index] === cat?._id}
-                    defaultChecked={categoriesSearch[index] === cat?._id}
+                    checked={
+                      categoriesSearch?.includes(cat?._id) || location.search.includes(cat?._id)
+                    }
                     label={cat?.name}
                   />
                 ))}
@@ -128,13 +135,13 @@ export default function ProductFilters({
       <Typography variant="subtitle2">Ranglar</Typography>
 
       <Stack flexDirection="row" gap={2} alignItems="center" flexWrap="wrap">
-        {colors?.map((color) => (
+        {colors?.map((color, index) => (
           <CustomCheckbox
             key={color?._id}
             htmlFor={color?._id}
             color={color?.color}
-            onChange={colorOnChange}
-            checked={colorSearch.includes(color?._id)}
+            onChange={(event) => colorOnChange(event, color?._id, index)}
+            checked={colorSearch.includes(color?._id) || location.search.includes(color?._id)}
           />
         ))}
       </Stack>

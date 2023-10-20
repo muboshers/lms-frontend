@@ -10,6 +10,7 @@ export default function CustomCheckbox({ htmlFor, onChange, color, checked }) {
   const [isChecked, setIsChecked] = useState(false);
 
   const checkedBgColor = isChecked ? color : color;
+
   const checkedBrColor = isChecked ? color : '#ccc';
 
   useEffect(() => {

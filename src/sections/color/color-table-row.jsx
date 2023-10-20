@@ -1,41 +1,33 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import Stack from '@mui/material/Stack';
-import Popover from '@mui/material/Popover';
-import TableRow from '@mui/material/TableRow';
-import MenuItem from '@mui/material/MenuItem';
-import TableCell from '@mui/material/TableCell';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
+import { Box, Popover, TableRow, MenuItem, TableCell, IconButton } from '@mui/material';
 
-import { useRouter } from 'src/routes/hooks';
+import { fDateTime } from 'src/utils/format-time';
 
 import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function CategoryTableRow({ categoryRow, setEditData, openFn, setId, openDlModal }) {
+export default function ColorTableRow({ colorRow, setEditData, openFn, setId, openDlModal }) {
   const [open, setOpen] = useState(null);
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
   };
 
-  const { push } = useRouter();
-
   const handleCloseMenu = () => {
     setOpen(null);
   };
 
   const editButtonClick = () => {
-    setEditData(categoryRow);
+    setEditData(colorRow);
     openFn();
     handleCloseMenu();
   };
 
   const delButtonClick = () => {
-    setId(categoryRow._id);
+    setId(colorRow._id);
     openDlModal();
     handleCloseMenu();
   };
@@ -44,14 +36,17 @@ export default function CategoryTableRow({ categoryRow, setEditData, openFn, set
     <>
       <TableRow hover tabIndex={-1} role="checkbox">
         <TableCell component="th" scope="row">
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <Typography variant="subtitle2" noWrap>
-              {categoryRow?.name}
-            </Typography>
-          </Stack>
+          <Box
+            sx={{
+              width: '25px',
+              height: '25px',
+              borderRadius: '50%',
+              backgroundColor: colorRow?.color,
+            }}
+          />
         </TableCell>
 
-        <TableCell>{categoryRow?.children?.length}</TableCell>
+        <TableCell>{fDateTime(colorRow?.createdAt)}</TableCell>
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
@@ -79,20 +74,13 @@ export default function CategoryTableRow({ categoryRow, setEditData, openFn, set
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
           O&apos;chirish
         </MenuItem>
-        <MenuItem
-          onClick={() => push(`/category/${categoryRow?._id}`)}
-          sx={{ color: 'success.main' }}
-        >
-          <Iconify icon="ph:eye-light" sx={{ mr: 2 }} />
-          K&apos;rish
-        </MenuItem>
       </Popover>
     </>
   );
 }
 
-CategoryTableRow.propTypes = {
-  categoryRow: PropTypes.object,
+ColorTableRow.propTypes = {
+  colorRow: PropTypes.object,
   setEditData: PropTypes.any,
   openFn: PropTypes.func,
   setId: PropTypes.func,

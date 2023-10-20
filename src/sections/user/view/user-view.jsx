@@ -27,6 +27,8 @@ import { emptyRows, applyFilter, getComparator } from '../utils';
 export default function UserPage() {
   const [page, setPage] = useState(0);
 
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
   const [order, setOrder] = useState('asc');
 
   const [selected, setSelected] = useState([]);
@@ -34,8 +36,6 @@ export default function UserPage() {
   const [orderBy, setOrderBy] = useState('name');
 
   const [filterName, setFilterName] = useState('');
-
-  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
