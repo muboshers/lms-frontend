@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import {
@@ -99,6 +99,14 @@ export default function ProductFilters({
     push(`/products?${categoryQuery}${colorQuery}`);
     setClonedData([]);
   };
+
+  useEffect(() => {
+    const url = new URLSearchParams(location.search);
+    setCategoriesSearch(url.getAll('categoryId'));
+    setColorSearch(url.getAll('color'));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const renderCategory = (
     <>
       {categories && (
@@ -116,9 +124,7 @@ export default function ProductFilters({
                     onChange={(event) => catOnChange(event, cat?._id, index)}
                     key={cat?._id}
                     control={<Checkbox />}
-                    checked={
-                      categoriesSearch?.includes(cat?._id) || location.search.includes(cat?._id)
-                    }
+                    checked={categoriesSearch?.includes(cat?._id)}
                     label={cat?.name}
                   />
                 ))}
