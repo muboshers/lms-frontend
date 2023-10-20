@@ -4,8 +4,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import { TextField, IconButton, InputAdornment } from '@mui/material';
 
-// eslint-disable-next-line import/no-unresolved
-import Iconify from '../iconify/Iconify';
+import Iconify from '../iconify';
 
 RHFTextField.propTypes = {
   name: PropTypes.string,
