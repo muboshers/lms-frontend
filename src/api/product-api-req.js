@@ -6,7 +6,11 @@ import { PRODUCT } from './url';
 export const ProductApiReq = baseApi.injectEndpoints({
   endpoints: ({ query, mutation }) => ({
     getProduct: query({
-      query: (arg) => `${PRODUCT.LIST}?page=${arg?.page}`,
+      query: (arg) => {
+        let url = `${PRODUCT.LIST}?page=${arg?.page}`;
+        if (arg.query) url += arg.query;
+        return url;
+      },
       transformErrorResponse: (error) => ErrorHandle(error?.message),
       providesTags: ['PRODUCT'],
     }),

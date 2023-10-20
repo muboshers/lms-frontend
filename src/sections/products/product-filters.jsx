@@ -1,119 +1,143 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Radio from '@mui/material/Radio';
-import Button from '@mui/material/Button';
-import Drawer from '@mui/material/Drawer';
-import Rating from '@mui/material/Rating';
-import Divider from '@mui/material/Divider';
-import RadioGroup from '@mui/material/RadioGroup';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import {
+  Box,
+  Stack,
+  Button,
+  Drawer,
+  Divider,
+  Checkbox,
+  FormGroup,
+  Typography,
+  IconButton,
+  FormControlLabel,
+} from '@mui/material';
+
+import { useRouter } from 'src/routes/hooks';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
-import { ColorPicker } from 'src/components/color-utils';
+import CustomCheckbox from 'src/components/checkbox/custom-checkbox';
 
 // ----------------------------------------------------------------------
 
-export const SORT_OPTIONS = [
-  { value: 'featured', label: 'Featured' },
-  { value: 'newest', label: 'Newest' },
-  { value: 'priceDesc', label: 'Price: High-Low' },
-  { value: 'priceAsc', label: 'Price: Low-High' },
-];
-export const CATEGORY_OPTIONS = ['All', 'Shose', 'Apparel', 'Accessories'];
-export const RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star'];
-export const PRICE_OPTIONS = [
-  { value: 'below', label: 'Below $25' },
-  { value: 'between', label: 'Between $25 - $75' },
-  { value: 'above', label: 'Above $75' },
-];
-export const COLOR_OPTIONS = [
-  '#00AB55',
-  '#000000',
-  '#FFFFFF',
-  '#FFC0CB',
-  '#FF4842',
-  '#1890FF',
-  '#94D82D',
-  '#FFC107',
-];
+export default function ProductFilters({
+  openFilter,
+  onOpenFilter,
+  onCloseFilter,
+  setClonedData,
+  categories,
+  colors,
+}) {
+  // eslint-disable-next-line no-unused-vars
+  const { push } = useRouter();
 
-// ----------------------------------------------------------------------
+  const [categoriesSearch, setCategoriesSearch] = useState([]);
+  const [colorSearch, setColorSearch] = useState([]);
 
-export default function ProductFilters({ openFilter, onOpenFilter, onCloseFilter, categories }) {
-  console.log(categories);
+  const catOnChange = (event, id, index) => {
+    let clonedCategoriesSearch = [...categoriesSearch];
+
+    const isChecked = event.target.checked;
+
+    if (isChecked) {
+      clonedCategoriesSearch[index] = id;
+    } else {
+      clonedCategoriesSearch = clonedCategoriesSearch.filter((catId) => catId !== id);
+    }
+
+    setCategoriesSearch(clonedCategoriesSearch);
+  };
+
+  const colorOnChange = (event, id, index) => {
+    let clonedColorSearch = [...categoriesSearch];
+
+    const isChecked = event.target.checked;
+
+    if (isChecked) {
+      clonedColorSearch[index] = id;
+    } else {
+      clonedColorSearch = clonedColorSearch.filter((catId) => catId !== id);
+    }
+
+    setColorSearch(clonedColorSearch);
+  };
+
+  const resetFilter = () => {
+    setCategoriesSearch([]);
+    setColorSearch([]);
+    push('/products');
+  };
+
+  const handleNavigateSearch = () => {
+    let categoryQuery = '';
+    let colorQuery = '';
+
+    if (categoriesSearch.length >= 1) {
+      categoriesSearch
+        .filter((item) => !!item)
+        .forEach((categoryId) => {
+          categoryQuery += `categoryId=${categoryId}&`;
+        });
+    }
+
+    if (colorSearch.length >= 1) {
+      colorSearch
+        .filter((item) => !!item)
+        .forEach((color) => {
+          colorQuery += `color=${color}&`;
+        });
+    }
+
+    push(`/products?${categoryQuery}${colorQuery}`);
+    setClonedData([]);
+  };
   const renderCategory = (
-    <Stack spacing={1}>
-      <Typography variant="subtitle2">Category</Typography>
-      <RadioGroup>
-        {CATEGORY_OPTIONS.map((item) => (
-          <FormControlLabel key={item} value={item} control={<Radio />} label={item} />
-        ))}
-      </RadioGroup>
-    </Stack>
+    <>
+      {categories && (
+        <Stack spacing={1}>
+          <Typography variant="subtitle2">Kategoriyalar</Typography>
+          <FormGroup>
+            <Scrollbar>
+              <Box
+                sx={{
+                  height: '200px',
+                }}
+              >
+                {categories.map((cat, index) => (
+                  <FormControlLabel
+                    onChange={(event) => catOnChange(event, cat?._id, index)}
+                    key={cat?._id}
+                    control={<Checkbox />}
+                    checked={categoriesSearch[index] === cat?._id}
+                    defaultChecked={categoriesSearch[index] === cat?._id}
+                    label={cat?.name}
+                  />
+                ))}
+              </Box>
+            </Scrollbar>
+          </FormGroup>
+        </Stack>
+      )}
+    </>
   );
 
   const renderColors = (
     <Stack spacing={1}>
-      <Typography variant="subtitle2">Colors</Typography>
-      <ColorPicker
-        name="colors"
-        selected={[]}
-        colors={COLOR_OPTIONS}
-        onSelectColor={(color) => [].includes(color)}
-        sx={{ maxWidth: 38 * 4 }}
-      />
-    </Stack>
-  );
+      <Typography variant="subtitle2">Ranglar</Typography>
 
-  const renderPrice = (
-    <Stack spacing={1}>
-      <Typography variant="subtitle2">Price</Typography>
-      <RadioGroup>
-        {PRICE_OPTIONS.map((item) => (
-          <FormControlLabel
-            key={item.value}
-            value={item.value}
-            control={<Radio />}
-            label={item.label}
+      <Stack flexDirection="row" gap={2} alignItems="center" flexWrap="wrap">
+        {colors?.map((color) => (
+          <CustomCheckbox
+            key={color?._id}
+            htmlFor={color?._id}
+            color={color?.color}
+            onChange={colorOnChange}
+            checked={colorSearch.includes(color?._id)}
           />
         ))}
-      </RadioGroup>
-    </Stack>
-  );
-
-  const renderRating = (
-    <Stack spacing={1}>
-      <Typography variant="subtitle2">Rating</Typography>
-      <RadioGroup>
-        {RATING_OPTIONS.map((item, index) => (
-          <FormControlLabel
-            key={item}
-            value={item}
-            control={
-              <Radio
-                disableRipple
-                color="default"
-                icon={<Rating readOnly value={4 - index} />}
-                checkedIcon={<Rating readOnly value={4 - index} />}
-                sx={{
-                  '&:hover': { bgcolor: 'transparent' },
-                }}
-              />
-            }
-            label="& Up"
-            sx={{
-              my: 0.5,
-              borderRadius: 1,
-              '&:hover': { opacity: 0.48 },
-            }}
-          />
-        ))}
-      </RadioGroup>
+      </Stack>
     </Stack>
   );
 
@@ -143,7 +167,7 @@ export default function ProductFilters({ openFilter, onOpenFilter, onCloseFilter
           sx={{ px: 1, py: 2 }}
         >
           <Typography variant="h6" sx={{ ml: 1 }}>
-            Filters
+            Qidirish
           </Typography>
           <IconButton onClick={onCloseFilter}>
             <Iconify icon="eva:close-fill" />
@@ -157,10 +181,6 @@ export default function ProductFilters({ openFilter, onOpenFilter, onCloseFilter
             {renderCategory}
 
             {renderColors}
-
-            {renderPrice}
-
-            {renderRating}
           </Stack>
         </Scrollbar>
 
@@ -170,10 +190,25 @@ export default function ProductFilters({ openFilter, onOpenFilter, onCloseFilter
             size="large"
             type="submit"
             color="inherit"
+            variant="contained"
+            onClick={handleNavigateSearch}
+            startIcon={<Iconify icon="ic:search" />}
+            sx={{
+              mb: 1,
+            }}
+          >
+            Qidirish
+          </Button>
+          <Button
+            fullWidth
+            size="large"
+            type="submit"
+            color="inherit"
             variant="outlined"
+            onClick={resetFilter}
             startIcon={<Iconify icon="ic:round-clear-all" />}
           >
-            Clear All
+            Qidiruvni tozalash
           </Button>
         </Box>
       </Drawer>
@@ -185,5 +220,7 @@ ProductFilters.propTypes = {
   openFilter: PropTypes.bool,
   onOpenFilter: PropTypes.func,
   onCloseFilter: PropTypes.func,
+  setClonedData: PropTypes.func,
   categories: PropTypes.any,
+  colors: PropTypes.any,
 };
