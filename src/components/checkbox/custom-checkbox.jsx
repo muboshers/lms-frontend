@@ -4,8 +4,16 @@ import React, { useRef, useState, useEffect } from 'react';
 
 import './custom-checkbox.style.css';
 
-export default function CustomCheckbox({ htmlFor, onChange, color, checked }) {
+export default function CustomCheckbox({
+  htmlFor,
+  onChange,
+  color,
+  checked,
+  withoutDefaultChecked,
+}) {
   const checkboxRef = useRef();
+
+  const [inputProps, setInputProps] = useState({});
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -19,6 +27,14 @@ export default function CustomCheckbox({ htmlFor, onChange, color, checked }) {
     });
   }, []);
 
+  useEffect(() => {
+    if (withoutDefaultChecked) {
+      setInputProps({
+        checked,
+      });
+    }
+  }, [checked, withoutDefaultChecked]);
+
   return (
     <div className="round">
       <input
@@ -27,6 +43,7 @@ export default function CustomCheckbox({ htmlFor, onChange, color, checked }) {
         onChange={onChange}
         id={htmlFor}
         ref={checkboxRef}
+        {...inputProps}
       />
       <label
         htmlFor={htmlFor}
@@ -44,4 +61,5 @@ CustomCheckbox.propTypes = {
   onChange: PropTypes.any,
   color: PropTypes.string,
   checked: PropTypes.bool,
+  withoutDefaultChecked: PropTypes.bool,
 };

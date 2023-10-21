@@ -1,34 +1,34 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-import Box from '@mui/material/Box';
-// import Link from '@mui/material/Link';
-import Card from '@mui/material/Card';
-// import Stack from '@mui/material/Stack';
-// import Typography from '@mui/material/Typography';
-
-// import { fCurrency } from 'src/utils/format-number';
-
 import { Link } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
 import { Stack, Typography } from '@mui/material';
+
+import CustomCheckbox from 'src/components/checkbox/custom-checkbox';
 
 // import { ColorPreview } from 'src/components/color-utils';
 
 export default function ShopProductCard({ product }) {
-  console.log(product?.color);
+  const [activeColor, setActiveColor] = useState(product?.color[0]);
+
+  const handleColorChange = (event, col) => {
+    setActiveColor(col);
+  };
   // eslint-disable-next-line react/no-unstable-nested-components
   const RenderImage = () => (
     <>
-      {product?.image?.length === 1 ? (
+      {activeColor?.length === 1 ? (
         <Box
           component="img"
           alt={product.title}
-          src={product.image[0]}
+          src={activeColor.images[0]}
           sx={{
             top: 0,
             width: 1,
@@ -50,7 +50,7 @@ export default function ShopProductCard({ product }) {
           pagination
           modules={[Pagination, Autoplay]}
         >
-          {product?.image?.map((imageURL) => (
+          {activeColor.images?.map((imageURL) => (
             <SwiperSlide key={imageURL}>
               <Box
                 component="img"
@@ -95,15 +95,18 @@ export default function ShopProductCard({ product }) {
             ? product?.description?.slice(0, 25)
             : product?.description
         }...`}
-        <div
-          style={{
-            display: 'block',
-            background: product?.color?.color,
-            width: '25px',
-            height: '25px',
-            borderRadius: '12px',
-          }}
-        />
+        <Stack flexDirection="row" alignItems="center" gap={2.5}>
+          {product?.color?.map((col) => (
+            <CustomCheckbox
+              key={col?.color?._id}
+              color={col?.color?.color}
+              htmlFor={col?.color?._id}
+              withoutDefaultChecked
+              checked={activeColor?.color?._id === col?.color?._id}
+              onChange={(event) => handleColorChange(event, col)}
+            />
+          ))}
+        </Stack>
       </Stack>
     </Card>
   );

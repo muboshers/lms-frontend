@@ -144,7 +144,8 @@ export default function ProductFilters({
         {colors?.map((color, index) => (
           <CustomCheckbox
             key={color?._id}
-            htmlFor={color?._id}
+            // eslint-disable-next-line no-unsafe-optional-chaining
+            htmlFor={color?._id + index}
             color={color?.color}
             onChange={(event) => colorOnChange(event, color?._id, index)}
             checked={colorSearch.includes(color?._id) || location.search.includes(color?._id)}

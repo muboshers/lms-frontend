@@ -8,7 +8,7 @@ export default function ProductsPage() {
   return (
     <>
       <Helmet>
-        <title> Products | Minimal UI </title>
+        <title> Mahsulotlar | Zilol Mebel </title>
       </Helmet>
 
       <ProductsView />
