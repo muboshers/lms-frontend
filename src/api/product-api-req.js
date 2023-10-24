@@ -16,10 +16,11 @@ export const ProductApiReq = baseApi.injectEndpoints({
     }),
 
     createProduct: mutation({
-      query: (arg) => ({
+      query: (formData) => ({
         url: PRODUCT.CREATE,
         method: 'POST',
-        body: { ...arg },
+        formData: true,
+        body: formData,
       }),
       invalidatesTags: (_, error) => (error ? [] : ['PRODUCT']),
       transformErrorResponse: (error) => ErrorHandle(error?.message),

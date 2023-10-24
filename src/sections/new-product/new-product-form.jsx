@@ -1,11 +1,18 @@
 import React from 'react';
 import * as yup from 'yup';
+import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { LoadingButton } from '@mui/lab';
 import { Card, Stack, Container } from '@mui/material';
 
+import { useRouter } from 'src/routes/hooks';
+
+import { hasEmptyValues } from 'src/utils/object';
+
 import { useGetColorsQuery } from 'src/api/color-api-req';
+import { useCreateProductMutation } from 'src/api/product-api-req';
 
 import { RHFTextField } from 'src/components/hook-form';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
@@ -16,6 +23,10 @@ import OptionRow from './option-row';
 import CategoryRow from './category-row';
 
 function NewProductForm() {
+  const [createProduct, createProductRes] = useCreateProductMutation();
+
+  const { push } = useRouter();
+
   const schema = yup.object().shape({
     title: yup.string().required('Mahsulot nomi talab etiladi'),
     description: yup.string().required('Mahsulot izohini yozish talab etiladi'),
@@ -66,36 +77,53 @@ function NewProductForm() {
     resolver: yupResolver(schema),
   });
 
-  const {
-    handleSubmit,
-    formState: { errors },
-  } = methods;
+  const { handleSubmit } = methods;
 
   const { data } = useGetColorsQuery();
 
-  const onSubmit = (formData) => {
-    const categoryId = formData?.categories?.map((cat) => cat.categoryId);
-    const images = formData?.color?.map((color) => color.images).flat();
+  console.log(createProductRes.isLoading);
 
-    const colors = formData.color.map((color) => {
+  const onSubmit = async (requestBody) => {
+    const formData = new FormData();
+    const { title, description, categories, color, option } = requestBody;
+    const categoryId = categories?.map((cat) => cat.categoryId);
+    const images = color?.map((col) => col.images).flat();
+    const isNotEmptyOption = hasEmptyValues(option);
+
+    const colors = color.map((col) => {
       const imagePlace = [];
-      for (let i = 0; i < color.images.length; i += 1) {
-        const currentImageIdx = images.findIndex((img) => img?.name === color.images[i].name);
+      for (let i = 0; i < col?.images?.length; i += 1) {
+        const currentImageIdx = images.findIndex((img) => img?.name === col?.images[i]?.name);
         if (currentImageIdx > -1) {
           imagePlace.push(currentImageIdx);
         }
       }
 
       return {
-        ...color,
+        ...col,
         imagePlace,
       };
     });
 
-    console.log(colors);
-    console.log(categoryId);
-    console.log(images);
-    console.log(formData);
+    for (let i = 0; i < images.length; i += 1) {
+      formData.append('image', images[i]);
+    }
+
+    if (!isNotEmptyOption) formData.append('options', JSON.stringify(requestBody.option));
+
+    formData.append('categoryId', JSON.stringify(categoryId));
+    formData.append('colors', JSON.stringify(colors));
+    formData.append('title', title);
+    formData.append('description', description);
+
+    console.log(formData.getAll('image'));
+
+    await createProduct(formData)
+      .unwrap()
+      .then(() => {
+        push('/product');
+        toast.success("Mahsulot muffaqqiyatli qo'shildi");
+      });
   };
 
   return (
@@ -118,14 +146,20 @@ function NewProductForm() {
             <ColorRow colors={data} />
             <OptionRow />
           </Stack>
-          <button
+
+          <LoadingButton
+            fullWidth
+            variant="contained"
+            color="success"
             type="submit"
-            onClick={() => {
-              console.log(errors);
+            loading={createProductRes.isLoading}
+            size="medium"
+            sx={{
+              maxWidth: '180px',
             }}
           >
-            Yaratish
-          </button>
+            Saqlash
+          </LoadingButton>
         </RHFFormProvider>
       </Card>
     </Container>
