@@ -1,19 +1,11 @@
-// next
-import NextLink from 'next/link';
+import PropTypes from 'prop-types';
+import { Link as ReactRouterLink } from 'react-router-dom';
+
 // @mui
-import { Box, Link } from '@mui/material';
-//
-import { BreadcrumbsLinkProps } from './types';
+import { Box, Link as MuiLink } from '@mui/material';
 
-// ----------------------------------------------------------------------
-
-type Props = {
-  link: BreadcrumbsLinkProps;
-  activeLast?: boolean;
-  disabled: boolean;
-};
-
-export default function BreadcrumbsLink({ link, activeLast, disabled }: Props) {
+export default function BreadcrumbsLink({ link, activeLast, disabled }) {
+  // eslint-disable-next-line react/prop-types
   const { name, href, icon } = link;
 
   const styles = {
@@ -50,11 +42,17 @@ export default function BreadcrumbsLink({ link, activeLast, disabled }: Props) {
 
   if (href) {
     return (
-      <Link component={NextLink} href={href} sx={styles}>
+      <MuiLink component={ReactRouterLink} href={href} sx={styles}>
         {renderContent}
-      </Link>
+      </MuiLink>
     );
   }
 
   return <Box sx={styles}> {renderContent} </Box>;
 }
+
+BreadcrumbsLink.propTypes = {
+  link: PropTypes.any,
+  activeLast: PropTypes.any,
+  disabled: PropTypes.bool,
+};

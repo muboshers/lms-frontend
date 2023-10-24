@@ -8,7 +8,7 @@ export const CATEGORYApiReq = baseApi.injectEndpoints({
     getCategory: query({
       query: (arg) => {
         let url = CATEGORY.LIST;
-        if (arg.id) url += `/${arg.id}`;
+        if (arg.id) url += `/get/${arg.id}`;
         return url;
       },
       transformErrorResponse: (error) => ErrorHandle(error?.message),

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {
   Card,
   Table,
-  Stack,
   Container,
   TableBody,
   IconButton,
@@ -16,6 +15,7 @@ import { useGetCategoryQuery } from 'src/api/category-api.req';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
+import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 import TableNoData from '../table-no-data';
 import CategoryForm from '../category-form';
@@ -50,13 +50,15 @@ export default function CategoryPage({ categoryId }) {
   return (
     <>
       <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4">Kategoriyalar</Typography>
-
-          <IconButton variant="contained" color="primary" type="button" onClick={modalOpen}>
-            <Iconify icon="eva:plus-fill" />
-          </IconButton>
-        </Stack>
+        <CustomBreadcrumbs
+          heading="Kategoriyalar"
+          links={[{ name: "Kategoriyar ro'yhati" }]}
+          action={
+            <IconButton variant="contained" color="primary" type="button" onClick={modalOpen}>
+              <Iconify icon="eva:plus-fill" />
+            </IconButton>
+          }
+        />
 
         <Card
           sx={{

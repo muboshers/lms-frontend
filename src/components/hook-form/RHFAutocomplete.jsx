@@ -1,54 +1,49 @@
-import PropTypes from 'prop-types';
+/* eslint-disable react/prop-types */
+// form
 import { Controller, useFormContext } from 'react-hook-form';
 
+// @mui
 import { TextField, Autocomplete } from '@mui/material';
 
-function RHFAutocomplete({ name, label, options, helperText, isAutoFocus = false, ...other }) {
-  const { control } = useFormContext();
+// ----------------------------------------------------------------------
+
+// eslint-disable-next-line react/prop-types
+export default function RHFAutocomplete({
+  name,
+  label,
+  helperText,
+  valueKey,
+  setSearch,
+  ...other
+}) {
+  const { control, setValue } = useFormContext();
+
   return (
     <Controller
       name={name}
       control={control}
-      rules={{
-        required: 'this field is requried',
-      }}
-      render={({ field, fieldState: { error } }) => {
-        const { onChange, value, ref } = field;
-        return (
-          <>
-            <Autocomplete
-              value={value ? options?.find((option) => value === option.id) ?? null : null}
-              getOptionLabel={(option) => option.label}
-              onChange={(event, newValue) => {
-                onChange(newValue ? newValue.id : null);
+      render={({ field, fieldState: { error } }) => (
+        <Autocomplete
+          {...field}
+          onChange={(event, newValue) => {
+            setValue(name, newValue, { shouldValidate: true });
+          }}
+          renderInput={(params) => (
+            <TextField
+              label={label}
+              error={!!error}
+              helperText={error ? error?.message : helperText}
+              onChange={(e) => {
+                if (setSearch) {
+                  setSearch(e.target.value);
+                }
               }}
-              options={options ?? []}
-              renderInput={(params) => (
-                <TextField
-                  autoFocus={isAutoFocus}
-                  {...params}
-                  label={label}
-                  inputRef={ref}
-                  helperText={helperText}
-                />
-              )}
-              {...other}
+              {...params}
             />
-            {error ? <span style={{ color: 'red' }}>{error.message}</span> : null}
-          </>
-        );
-      }}
+          )}
+          {...other}
+        />
+      )}
     />
   );
 }
-
-RHFAutocomplete.propTypes = {
-  name: PropTypes.string.isRequired,
-  label: PropTypes.string,
-  helperText: PropTypes.node,
-  options: PropTypes.any,
-  onChange: PropTypes.func,
-  isAutoFocus: PropTypes.bool,
-};
-
-export default RHFAutocomplete;
