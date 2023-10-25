@@ -24,3 +24,12 @@ export const COLORS = {
   UPDATE: 'color',
   DELETE: 'color',
 };
+
+export const CLIENT = {
+  LIST: 'client',
+};
+
+export const NOTIFICATION = {
+  LIST: 'notification',
+  UPDATE_TO_READ: 'notification',
+};

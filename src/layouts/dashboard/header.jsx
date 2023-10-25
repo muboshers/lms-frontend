@@ -15,10 +15,11 @@ import Iconify from 'src/components/iconify';
 
 import { NAV, HEADER } from './config-layout';
 import AccountPopover from './common/account-popover';
+import NotificationsPopover from './common/notifications-popover';
 
 // ----------------------------------------------------------------------
 
-export default function Header({ onOpenNav }) {
+export default function Header({ onOpenNav, data, setClonedNotificationData }) {
   const theme = useTheme();
 
   const lgUp = useResponsive('up', 'lg');
@@ -35,6 +36,7 @@ export default function Header({ onOpenNav }) {
 
       <Stack direction="row" alignItems="center" spacing={1}>
         <AccountPopover />
+        <NotificationsPopover data={data} setClonedNotificationData={setClonedNotificationData} />
       </Stack>
     </>
   );
@@ -71,4 +73,6 @@ export default function Header({ onOpenNav }) {
 
 Header.propTypes = {
   onOpenNav: PropTypes.func,
+  data: PropTypes.array,
+  setClonedNotificationData: PropTypes.func,
 };

@@ -80,12 +80,12 @@ export default function ProductsView() {
     <Grid container spacing={3}>
       {productLoading
         ? new Array(8).fill(',').map((_, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
+            <Grid item xs={6} sm={6} md={3} key={index}>
               <ProductCardLoader />
             </Grid>
           ))
         : clonedData.map((product) => (
-            <Grid key={product._id} xs={12} sm={6} md={3}>
+            <Grid key={product._id} xs={6} sm={6} md={3}>
               <ProductCard product={product} openFn={openFn} />
             </Grid>
           ))}
