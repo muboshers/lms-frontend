@@ -25,7 +25,8 @@ export default function DashboardLayout({ children }) {
   const [clonedNotificationData, setClonedNotificationData] = useState([]);
 
   useEffect(() => {
-    const pusher = new Pusher('0edb74eed3e3ebdabbf4', {
+    Pusher.logToConsole = true;
+    const pusher = new Pusher('a302515dc7a76626448d', {
       cluster: 'eu',
     });
 
