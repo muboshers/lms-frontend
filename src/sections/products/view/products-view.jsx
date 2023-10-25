@@ -15,7 +15,9 @@ import { useGetCategoryQuery } from 'src/api/category-api.req';
 
 import ProductCard from '../product-card';
 import ProductFilters from '../product-filters';
+import ProductNotFound from '../product-not-found';
 import ProductCardLoader from '../product-card-loader';
+import ProductDeleteModal from '../product-delete-modal';
 
 // ----------------------------------------------------------------------
 
@@ -23,6 +25,9 @@ export default function ProductsView() {
   const [page, setPage] = useState(1);
   const { push } = useRouter();
   const [clonedData, setClonedData] = useState([]);
+  const [id, setId] = useState(null);
+  const [open, setOpen] = useState(false);
+
   const location = useLocation();
   const { data: categories } = useGetCategoryQuery({}, {});
   const { data: colors } = useGetColorsQuery({}, {});
@@ -50,6 +55,19 @@ export default function ProductsView() {
     if (page <= data?.totalPages) setPage(page + 1);
   };
 
+  const closeFn = () => {
+    setOpen(false);
+    setId(null);
+  };
+
+  // eslint-disable-next-line no-shadow
+  const openFn = (id) => {
+    setId(id);
+    setOpen(true);
+  };
+
+  const notFound = !isLoading && clonedData?.length === 0;
+
   useEffect(() => {
     if (data?.data) setClonedData([...data.data]);
     return () => {
@@ -68,54 +86,58 @@ export default function ProductsView() {
           ))
         : clonedData.map((product) => (
             <Grid key={product._id} xs={12} sm={6} md={3}>
-              <ProductCard product={product} />
+              <ProductCard product={product} openFn={openFn} />
             </Grid>
           ))}
     </Grid>
   );
 
   return (
-    <Container>
-      <Stack flexDirection="row" alignItems="center" justifyContent="space-between">
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          Mahsulotlar
-        </Typography>
-        <Button type="button" variant="contained" onClick={() => push('/new-product')}>
-          Mahsulot qo&apos;shish
-        </Button>
-      </Stack>
-      <Stack
-        direction="row"
-        alignItems="center"
-        flexWrap="wrap-reverse"
-        justifyContent="flex-end"
-        sx={{ mb: 5 }}
-      >
-        <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-          <ProductFilters
-            colors={colors}
-            categories={categories}
-            openFilter={openFilter}
-            onOpenFilter={handleOpenFilter}
-            onCloseFilter={handleCloseFilter}
-            setClonedData={setClonedData}
-          />
+    <>
+      <Container>
+        <Stack flexDirection="row" alignItems="center" justifyContent="space-between">
+          <Typography variant="h4" sx={{ mb: 5 }}>
+            Mahsulotlar
+          </Typography>
+          <Button type="button" variant="contained" onClick={() => push('/new-product')}>
+            Mahsulot qo&apos;shish
+          </Button>
         </Stack>
-      </Stack>
-      {renderProductCard}
-      {page < data?.totalPages && (
-        <Button
-          onClick={nextPage}
-          variant="contained"
-          sx={{
-            marginTop: 3,
-            display: 'block',
-            marginX: 'auto',
-          }}
+        <Stack
+          direction="row"
+          alignItems="center"
+          flexWrap="wrap-reverse"
+          justifyContent="flex-end"
+          sx={{ mb: 5 }}
         >
-          Show More
-        </Button>
-      )}
-    </Container>
+          <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
+            <ProductFilters
+              colors={colors}
+              categories={categories}
+              openFilter={openFilter}
+              onOpenFilter={handleOpenFilter}
+              onCloseFilter={handleCloseFilter}
+              setClonedData={setClonedData}
+            />
+          </Stack>
+        </Stack>
+        {notFound ? <ProductNotFound /> : renderProductCard}
+
+        {page < data?.totalPages && (
+          <Button
+            onClick={nextPage}
+            variant="contained"
+            sx={{
+              marginTop: 3,
+              display: 'block',
+              marginX: 'auto',
+            }}
+          >
+            Show More
+          </Button>
+        )}
+      </Container>
+      <ProductDeleteModal id={id} open={open} onClose={closeFn} />
+    </>
   );
 }

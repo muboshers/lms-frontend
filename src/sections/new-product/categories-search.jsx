@@ -14,6 +14,8 @@ export default function CategorySearch({ index }) {
 
   const [searchTerm, setSearchTerm] = useState('');
 
+  const [isFocus, setIsFocus] = useState(false);
+
   const categoryId = watch(`categories.${index}.categoryId`);
 
   const [data, setData] = useState([]);
@@ -28,7 +30,7 @@ export default function CategorySearch({ index }) {
       } catch (error) {
         console.log(error.message);
       }
-    }, 3000);
+    }, 500);
     setValue('', categoryId ?? '');
     return () => clearTimeout(fetchIndustry);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,6 +41,7 @@ export default function CategorySearch({ index }) {
       <TextField
         fullWidth
         placeholder="Kategoriyani qidirish"
+        onFocus={() => setIsFocus(true)}
         value={searchTerm}
         onChange={(e) => {
           if (!e.target.value) {
@@ -49,7 +52,7 @@ export default function CategorySearch({ index }) {
         }}
       />
 
-      {data?.length > 1 && searchTerm && (
+      {data?.length > 1 && isFocus && (
         <Card
           sx={{
             height: 120,
@@ -62,6 +65,7 @@ export default function CategorySearch({ index }) {
                 onClick={() => {
                   setValue(`categories.${index}.categoryId`, cat._id);
                   setSearchTerm(cat?.name);
+                  setIsFocus(false);
                 }}
               >
                 {cat?.name}

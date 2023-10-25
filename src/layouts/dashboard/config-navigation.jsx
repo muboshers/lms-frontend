@@ -18,7 +18,7 @@ const navConfig = [
     icon: icon('ic_user'),
   },
   {
-    title: 'product',
+    title: 'Mahsulotlar',
     path: '/products',
     icon: icon('ic_cart'),
   },
@@ -28,7 +28,7 @@ const navConfig = [
     icon: icon('ic_blog'),
   },
   {
-    title: 'Ranlar',
+    title: 'Ranglar',
     path: '/color',
     icon: icon('ic_color'),
   },

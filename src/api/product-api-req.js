@@ -8,7 +8,8 @@ export const ProductApiReq = baseApi.injectEndpoints({
     getProduct: query({
       query: (arg) => {
         let url = `${PRODUCT.LIST}?page=${arg?.page}`;
-        if (arg.query) url += arg.query;
+        console.log(arg.query);
+        if (arg.query) url += arg.query.replace('?', '&');
         return url;
       },
       transformErrorResponse: (error) => ErrorHandle(error?.message),

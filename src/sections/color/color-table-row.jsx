@@ -46,6 +46,7 @@ export default function ColorTableRow({ colorRow, setEditData, openFn, setId, op
           />
         </TableCell>
 
+        <TableCell>{colorRow?.name}</TableCell>
         <TableCell>{fDateTime(colorRow?.createdAt)}</TableCell>
 
         <TableCell align="right">

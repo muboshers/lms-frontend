@@ -27,7 +27,7 @@ export const colorApiReq = baseApi.injectEndpoints({
 
     updateColor: mutation({
       query: (arg) => ({
-        url: `${COLORS.UPDATE}/${arg._id}`,
+        url: `${COLORS.UPDATE}/${arg.id}`,
         method: 'PATCH',
         body: { ...arg },
       }),

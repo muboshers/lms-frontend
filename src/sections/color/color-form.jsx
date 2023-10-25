@@ -20,10 +20,12 @@ export default function ColorForm({ open, onClose, editData, id }) {
 
   const schema = yup.object().shape({
     color: yup.string().required('Rangni belgilash talab etiladi'),
+    name: yup.string().required('Rangni nomi talab etiladi'),
   });
 
   const defaultValues = {
     color: '#ff0000',
+    name: '',
   };
 
   const methods = useForm({
@@ -37,7 +39,8 @@ export default function ColorForm({ open, onClose, editData, id }) {
     if (editData?._id) {
       updateColor({
         color: data.color,
-        id,
+        name: data.name,
+        id: editData?._id,
       })
         .unwrap()
         .then(() => {
@@ -57,8 +60,9 @@ export default function ColorForm({ open, onClose, editData, id }) {
   };
 
   useEffect(() => {
-    if (editData?.color) {
+    if (editData?._id) {
       setValue('color', editData?.color);
+      setValue('name', editData?.name || '');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editData]);
@@ -75,6 +79,13 @@ export default function ColorForm({ open, onClose, editData, id }) {
           Kategoriya {editData?._id ? 'yangilash' : "qo'shish"}
         </Typography>
         <RHFFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+          <RHFTextField
+            name="name"
+            label="Rangni belgilang"
+            sx={{
+              marginBottom: 1.5,
+            }}
+          />
           <RHFTextField name="color" label="Rangni belgilang" type="color" />
           <LoadingButton
             variant="contained"

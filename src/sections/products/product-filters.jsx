@@ -91,7 +91,7 @@ export default function ProductFilters({
     if (colorSearch.length >= 1) {
       colorSearch
         .filter((item) => !!item)
-        .forEach((color) => {
+        .forEach((color, index) => {
           colorQuery += `color=${color}&`;
         });
     }

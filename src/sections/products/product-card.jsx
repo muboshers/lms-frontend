@@ -9,18 +9,22 @@ import { Autoplay, Pagination } from 'swiper/modules';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import { Stack, Typography } from '@mui/material';
+import { Stack, IconButton, Typography } from '@mui/material';
 
+import Iconify from 'src/components/iconify';
 import CustomCheckbox from 'src/components/checkbox/custom-checkbox';
 
 // import { ColorPreview } from 'src/components/color-utils';
 
-export default function ShopProductCard({ product }) {
+export default function ShopProductCard({ product, openFn }) {
   const [activeColor, setActiveColor] = useState(product?.color[0]);
 
   const handleColorChange = (event, col) => {
     setActiveColor(col);
   };
+
+  const openDelModal = () => openFn(product?._id);
+
   // eslint-disable-next-line react/no-unstable-nested-components
   const RenderImage = () => (
     <>
@@ -95,17 +99,22 @@ export default function ShopProductCard({ product }) {
             ? product?.description?.slice(0, 25)
             : product?.description
         }...`}
-        <Stack flexDirection="row" alignItems="center" gap={2.5}>
-          {product?.color?.map((col) => (
-            <CustomCheckbox
-              key={col?.color?._id}
-              color={col?.color?.color}
-              htmlFor={col?.color?._id}
-              withoutDefaultChecked
-              checked={activeColor?.color?._id === col?.color?._id}
-              onChange={(event) => handleColorChange(event, col)}
-            />
-          ))}
+        <Stack flexDirection="row" alignItems="center" justifyContent="space-between">
+          <Stack flexDirection="row" alignItems="center" gap={2.5}>
+            {product?.color?.map((col) => (
+              <CustomCheckbox
+                key={col?.color?._id}
+                color={col?.color?.color}
+                htmlFor={col?.color?._id}
+                withoutDefaultChecked
+                checked={activeColor?.color?._id === col?.color?._id}
+                onChange={(event) => handleColorChange(event, col)}
+              />
+            ))}
+          </Stack>
+          <IconButton color="error" onClick={openDelModal}>
+            <Iconify icon="mdi:delete" />
+          </IconButton>
         </Stack>
       </Stack>
     </Card>
@@ -114,4 +123,5 @@ export default function ShopProductCard({ product }) {
 
 ShopProductCard.propTypes = {
   product: PropTypes.object,
+  openFn: PropTypes.func,
 };

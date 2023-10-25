@@ -78,6 +78,7 @@ export default function ColorViewPage({ categoryId }) {
                 <ColorTableHead
                   headLabel={[
                     { id: 'name', label: 'Rang' },
+                    { id: 'name', label: 'Rang nomi' },
                     { id: 'childen', label: 'Yaratilgan sana' },
                     { id: '' },
                   ]}

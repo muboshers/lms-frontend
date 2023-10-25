@@ -7,7 +7,6 @@ import { Box, Link as MuiLink } from '@mui/material';
 export default function BreadcrumbsLink({ link, activeLast, disabled }) {
   // eslint-disable-next-line react/prop-types
   const { name, href, icon } = link;
-
   const styles = {
     typography: 'body2',
     alignItems: 'center',
@@ -42,7 +41,7 @@ export default function BreadcrumbsLink({ link, activeLast, disabled }) {
 
   if (href) {
     return (
-      <MuiLink component={ReactRouterLink} href={href} sx={styles}>
+      <MuiLink component={ReactRouterLink} to={href} sx={styles}>
         {renderContent}
       </MuiLink>
     );

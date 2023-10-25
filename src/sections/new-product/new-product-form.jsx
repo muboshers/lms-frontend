@@ -81,8 +81,6 @@ function NewProductForm() {
 
   const { data } = useGetColorsQuery();
 
-  console.log(createProductRes.isLoading);
-
   const onSubmit = async (requestBody) => {
     const formData = new FormData();
     const { title, description, categories, color, option } = requestBody;
@@ -116,8 +114,6 @@ function NewProductForm() {
     formData.append('title', title);
     formData.append('description', description);
 
-    console.log(formData.getAll('image'));
-
     await createProduct(formData)
       .unwrap()
       .then(() => {
@@ -130,7 +126,7 @@ function NewProductForm() {
     <Container>
       <CustomBreadcrumbs
         heading="Yangi mahsulot qo'shish"
-        links={[{ href: '/product', name: "Mahsulotlar ro'yhati" }, { name: "Mahsulot qo'shish" }]}
+        links={[{ href: '/products  ', name: "Mahsulotlar ro'yhati" }, { name: "Mahsulot qo'shish" }]}
       />
 
       <Card
