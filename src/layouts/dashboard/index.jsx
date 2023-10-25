@@ -1,3 +1,5 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable import/no-extraneous-dependencies */
 import Pusher from 'pusher-js';
@@ -24,22 +26,27 @@ export default function DashboardLayout({ children }) {
 
   const [clonedNotificationData, setClonedNotificationData] = useState([]);
 
+  const handleStart = () => (audioRef.current.src += '?autoplay=1');
+
   useEffect(() => {
-    Pusher.logToConsole = true;
-    const pusher = new Pusher('a302515dc7a76626448d', {
+    const pusher = new Pusher('0edb74eed3e3ebdabbf4', {
       cluster: 'eu',
     });
 
     const channel = pusher.subscribe('my-channel');
 
-    channel.bind('order', (data) => {
-      audioRef.current?.play();
-      console.log(data);
+    channel.bind('my-event', (data) => {
+      handleStart();
+      setClonedNotificationData((prev) => [...prev, { ...data.data }]);
+      setTimeout(() => {
+        audioRef.current.src = NotificationSound;
+      }, 1000);
     });
 
-    return () => {
-      pusher.unsubscribe();
-    };
+    // return () => {
+    //   pusher.unsubscribe();
+    // };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -54,13 +61,13 @@ export default function DashboardLayout({ children }) {
         onOpenNav={() => setOpenNav(true)}
       />
 
-      <audio
+      <iframe
+        title="Notification sound"
+        src={NotificationSound}
+        ref={audioRef}
         style={{
           display: 'none',
         }}
-        controls
-        src={NotificationSound}
-        ref={audioRef}
       />
 
       <Box
