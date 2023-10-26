@@ -24,6 +24,7 @@ export default function AccountPopover() {
   const handleLogOut = () => {
     handleClose();
     dispatch(logOut());
+    localStorage.clear();
   };
 
   return (
