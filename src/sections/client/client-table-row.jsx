@@ -10,7 +10,7 @@ export default function ColorTableRow({ clientRow }) {
   return (
     <TableRow tabIndex={-1} role="checkbox">
       <TableCell component="th" scope="row">
-        <TableCell>{clientRow?.name}</TableCell>
+        {clientRow?.name}
       </TableCell>
 
       <TableCell>{clientRow?.phone_number}</TableCell>

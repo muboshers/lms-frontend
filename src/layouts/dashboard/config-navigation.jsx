@@ -23,24 +23,14 @@ const navConfig = [
     icon: icon('ic_cart'),
   },
   {
-    title: 'blog',
-    path: '/blog',
+    title: 'Buyurtmalar',
+    path: '/orders',
     icon: icon('ic_blog'),
   },
   {
     title: 'Ranglar',
     path: '/color',
     icon: icon('ic_color'),
-  },
-  {
-    title: 'login',
-    path: '/login',
-    icon: icon('ic_lock'),
-  },
-  {
-    title: 'Not found',
-    path: '/404',
-    icon: icon('ic_disabled'),
   },
 ];
 

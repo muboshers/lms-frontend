@@ -33,3 +33,10 @@ export const NOTIFICATION = {
   LIST: 'notification',
   UPDATE_TO_READ: 'notification',
 };
+
+export const ORDER = {
+  LIST: 'order',
+  RECIEVE: 'order/recieve/', // IT TAKES ID
+  STATUS: 'order/status/', // IT TAKES ID
+  REPORT_EXCEL: 'order/report/excel',
+};

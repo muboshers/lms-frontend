@@ -24,20 +24,20 @@ import ClientTableHead from '../client-table-head';
 export default function ClientViewPage() {
   const [page, setPage] = useState(0);
 
-  const { data } = useGetClientListQuery({
-    page,
-  });
+  const { data } = useGetClientListQuery(
+    {
+      page,
+    },
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setPage(0);
-    setRowsPerPage(parseInt(event.target.value, 10));
-  };
 
   const notFound = !data?.data?.length;
 
@@ -77,11 +77,10 @@ export default function ClientViewPage() {
           page={page}
           component="div"
           count={data?.count || 1}
-          rowsPerPage={rowsPerPage}
+          rowsPerPage={10}
           onPageChange={handleChangePage}
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[]}
           labelRowsPerPage="Qatorlar soni"
-          onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Card>
     </Container>
