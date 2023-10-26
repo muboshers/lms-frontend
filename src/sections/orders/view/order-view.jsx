@@ -107,7 +107,7 @@ export default function OrderViewPage() {
                   { id: 'name', label: 'Telefon raqami' },
                   { id: 'products_length', label: 'Mahsulot nomi' },
                   { id: 'registered_date', label: 'Buyurtma berilgan sana' },
-                  { id: 'registered_date', label: 'Buyurtma holati' },
+                  { id: 'status', label: 'Buyurtma holati' },
                 ]}
               />
               <TableBody>
