@@ -117,7 +117,7 @@ function NewProductForm() {
     await createProduct(formData)
       .unwrap()
       .then(() => {
-        push('/product');
+        push('/products');
         toast.success("Mahsulot muffaqqiyatli qo'shildi");
       });
   };
@@ -126,7 +126,10 @@ function NewProductForm() {
     <Container>
       <CustomBreadcrumbs
         heading="Yangi mahsulot qo'shish"
-        links={[{ href: '/products  ', name: "Mahsulotlar ro'yhati" }, { name: "Mahsulot qo'shish" }]}
+        links={[
+          { href: '/products  ', name: "Mahsulotlar ro'yhati" },
+          { name: "Mahsulot qo'shish" },
+        ]}
       />
 
       <Card
