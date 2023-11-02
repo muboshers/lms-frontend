@@ -52,7 +52,7 @@ function ColorItem({ colors, index, append, remove }) {
                   backgroundColor: color?.color,
                 }}
               />
-              {color.color}
+              {color.name}
             </Stack>
           </MenuItem>
         ))}

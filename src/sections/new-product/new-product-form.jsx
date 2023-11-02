@@ -1,26 +1,27 @@
-import React from 'react';
-import * as yup from 'yup';
-import toast from 'react-hot-toast';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+/* eslint-disable no-unused-vars */
+import React from "react";
+import * as yup from "yup";
+import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-import { LoadingButton } from '@mui/lab';
-import { Card, Stack, Container } from '@mui/material';
+import { LoadingButton } from "@mui/lab";
+import { Card, Stack, Container } from "@mui/material";
 
-import { useRouter } from 'src/routes/hooks';
+import { useRouter } from "src/routes/hooks";
 
-import { hasEmptyValues } from 'src/utils/object';
+import { hasEmptyValues } from "src/utils/object";
 
-import { useGetColorsQuery } from 'src/api/color-api-req';
-import { useCreateProductMutation } from 'src/api/product-api-req';
+import { useGetColorsQuery } from "src/api/color-api-req";
+import { useCreateProductMutation } from "src/api/product-api-req";
 
-import { RHFTextField } from 'src/components/hook-form';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-import RHFFormProvider from 'src/components/hook-form/RHFFormProvider';
+import { RHFTextField } from "src/components/hook-form";
+import CustomBreadcrumbs from "src/components/custom-breadcrumbs";
+import RHFFormProvider from "src/components/hook-form/RHFFormProvider";
 
-import ColorRow from './color-row';
-import OptionRow from './option-row';
-import CategoryRow from './category-row';
+import ColorRow from "./color-row";
+import OptionRow from "./option-row";
+import CategoryRow from "./category-row";
 
 function NewProductForm() {
   const [createProduct, createProductRes] = useCreateProductMutation();
@@ -28,11 +29,13 @@ function NewProductForm() {
   const { push } = useRouter();
 
   const schema = yup.object().shape({
-    title: yup.string().required('Mahsulot nomi talab etiladi'),
-    description: yup.string().required('Mahsulot izohini yozish talab etiladi'),
+    title: yup.string().required("Mahsulot nomi talab etiladi"),
+    description: yup.string().required("Mahsulot izohini yozish talab etiladi"),
     categories: yup.array().of(
       yup.object().shape({
-        categoryId: yup.string().required('Kategoriyani belgilash talab etiladi'),
+        categoryId: yup
+          .string()
+          .required("Kategoriyani belgilash talab etiladi"),
       })
     ),
     option: yup.array().of(
@@ -44,29 +47,32 @@ function NewProductForm() {
     ),
     color: yup.array().of(
       yup.object().shape({
-        colorId: yup.string().required('Rangini belgilash talab etiladi'),
-        images: yup.array().min(1).required('Eng kamida 1 ta rasm talab etiladi'),
+        colorId: yup.string().required("Rangini belgilash talab etiladi"),
+        images: yup
+          .array()
+          .min(1)
+          .required("Eng kamida 1 ta rasm talab etiladi"),
       })
     ),
   });
 
   const defaultValues = {
-    title: '',
-    description: '',
+    title: "",
+    description: "",
     categories: [
       {
-        categoryId: '',
+        categoryId: "",
       },
     ],
     option: [
       {
-        name: '',
-        value: '',
+        name: "",
+        value: "",
       },
     ],
     color: [
       {
-        colorId: '',
+        colorId: "",
         images: [],
       },
     ],
@@ -91,7 +97,9 @@ function NewProductForm() {
     const colors = color.map((col) => {
       const imagePlace = [];
       for (let i = 0; i < col?.images?.length; i += 1) {
-        const currentImageIdx = images.findIndex((img) => img?.name === col?.images[i]?.name);
+        const currentImageIdx = images.findIndex(
+          (img) => img?.name === col?.images[i]?.name
+        );
         if (currentImageIdx > -1) {
           imagePlace.push(currentImageIdx);
         }
@@ -104,20 +112,21 @@ function NewProductForm() {
     });
 
     for (let i = 0; i < images.length; i += 1) {
-      formData.append('image', images[i]);
+      formData.append("image", images[i]);
     }
+    console.log(isNotEmptyOption);
+    if (!isNotEmptyOption)
+      formData.append("options", JSON.stringify(requestBody.option));
 
-    if (!isNotEmptyOption) formData.append('options', JSON.stringify(requestBody.option));
-
-    formData.append('categoryId', JSON.stringify(categoryId));
-    formData.append('colors', JSON.stringify(colors));
-    formData.append('title', title);
-    formData.append('description', description);
+    formData.append("categoryId", JSON.stringify(categoryId));
+    formData.append("colors", JSON.stringify(colors));
+    formData.append("title", title);
+    formData.append("description", description);
 
     await createProduct(formData)
       .unwrap()
       .then(() => {
-        push('/products');
+        push("/products");
         toast.success("Mahsulot muffaqqiyatli qo'shildi");
       });
   };
@@ -127,7 +136,7 @@ function NewProductForm() {
       <CustomBreadcrumbs
         heading="Yangi mahsulot qo'shish"
         links={[
-          { href: '/products  ', name: "Mahsulotlar ro'yhati" },
+          { href: "/products  ", name: "Mahsulotlar ro'yhati" },
           { name: "Mahsulot qo'shish" },
         ]}
       />
@@ -140,7 +149,12 @@ function NewProductForm() {
         <RHFFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={2}>
             <RHFTextField name="title" label="Mahsulot nomini yozing" />
-            <RHFTextField name="description" label="Mahsulot haqida yozing" multiline minRows={3} />
+            <RHFTextField
+              name="description"
+              label="Mahsulot haqida yozing"
+              multiline
+              minRows={3}
+            />
             <CategoryRow />
             <ColorRow colors={data} />
             <OptionRow />
@@ -154,7 +168,7 @@ function NewProductForm() {
             loading={createProductRes.isLoading}
             size="medium"
             sx={{
-              maxWidth: '180px',
+              maxWidth: "180px",
             }}
           >
             Saqlash
