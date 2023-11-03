@@ -1,35 +1,35 @@
-import axios from 'axios';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import axios from "axios";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { baseURL } from 'src/contants';
+import { baseURL } from "src/contants";
 
 export const axiosInstance = axios.create({
   baseURL,
 });
 
 axiosInstance.interceptors.request.use((req) => {
-  const user = JSON.parse(localStorage.getItem('user'));
-
-  if (user?.token) {
-    req.headers.Authorization = `Bearer ${user?.token}`;
+  const info = JSON.parse(localStorage.getItem("user"));
+  const token = info?.data?.token || null;
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`;
   }
 
   return req;
 });
 
 export const baseApi = createApi({
-  reducerPath: 'baseApi',
+  reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
     baseUrl: baseURL,
     prepareHeaders: (headers) => {
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (user?.token) {
-        headers.set('Authorization', `Bearer ${user?.token}`);
+      const info = JSON.parse(localStorage.getItem("user"));
+      const token = info?.data?.token || null;
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
       }
-
       return headers;
     },
   }),
-  tagTypes: ['CATEGORY', 'PRODUCT', 'COLORS', 'ORDERS'],
+  tagTypes: [],
   endpoints: () => ({}),
 });

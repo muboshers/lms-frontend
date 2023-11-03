@@ -1,25 +1,18 @@
-import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
+import PropTypes from "prop-types";
+import { forwardRef } from "react";
+import { useSelector } from "react-redux";
 
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
+import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
 
-import { RouterLink } from 'src/routes/components';
+import { RouterLink } from "src/routes/components";
 
-import LogoImage from 'src/assets/logo.png';
+import { SelectTeachingCenter } from "src/store/auth.reducer";
 
 // ----------------------------------------------------------------------
 
 const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
-  // OR using local (public folder)
-  // -------------------------------------------------------
-  // const logo = (
-  //   <Box
-  //     component="img"
-  //     src="/logo/logo_single.svg" => your path
-  //     sx={{ width: 40, height: 40, cursor: 'pointer', ...sx }}
-  //   />
-  // );
+  const teachingCenter = useSelector(SelectTeachingCenter);
 
   const logo = (
     <Box
@@ -27,19 +20,19 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
       component="div"
       sx={{
         width: 150,
-        height: 70,
-        display: 'inline-flex',
+        height: 80,
+        display: "inline-flex",
         ...sx,
       }}
       {...other}
     >
       <img
-        src={LogoImage}
+        src={teachingCenter?.logo.url}
         style={{
-          width: '100%',
-          height: '100%',
+          width: "100%",
+          height: "100%",
         }}
-        alt="Zilol Mebellar"
+        alt={teachingCenter?.name}
       />
     </Box>
   );
@@ -49,7 +42,7 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
   }
 
   return (
-    <Link component={RouterLink} href="/" sx={{ display: 'contents' }}>
+    <Link component={RouterLink} href="/" sx={{ display: "contents" }}>
       {logo}
     </Link>
   );

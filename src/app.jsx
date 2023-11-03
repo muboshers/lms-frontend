@@ -1,27 +1,32 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable perfectionist/sort-imports */
-import 'src/global.css';
-import { useLocation } from 'react-router-dom';
+import { useLayoutEffect } from "react";
+import { useDispatch } from "react-redux";
+import "src/global.css";
 
-import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
+import { useScrollToTop } from "src/hooks/use-scroll-to-top";
 
-import Router from 'src/routes/sections';
-import ThemeProvider from 'src/theme';
-import { useGetMeInfoQuery } from './api/auth-api-req';
+import Router from "src/routes/sections";
+import ThemeProvider from "src/theme";
+import { login } from "./store/auth.reducer";
+import { useGetMeInfoQuery } from "./api/auth-api-req";
 
 // ----------------------------------------------------------------------
 
 export default function App() {
-  const location = useLocation();
   useScrollToTop();
-  useGetMeInfoQuery(
-    {
-      path: location.pathname,
-    },
-    {
-      refetchOnMountOrArgChange: true,
-    }
-  );
 
+  const dispatch = useDispatch();
+
+  const userStorage = localStorage.getItem("user");
+
+  useLayoutEffect(() => {
+    const user = JSON.parse(userStorage);
+    dispatch(login(user?.data));
+    // return () => {};
+  }, [userStorage]);
+
+  useGetMeInfoQuery({});
   return (
     <ThemeProvider>
       <Router />

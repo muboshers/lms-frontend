@@ -1,29 +1,31 @@
-import { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useEffect } from "react";
+import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-import { alpha } from '@mui/material/styles';
-import { Box, Stack, Drawer, Typography, ListItemButton } from '@mui/material';
+import { alpha } from "@mui/material/styles";
+import { Box, Stack, Drawer, Typography, ListItemButton } from "@mui/material";
 
-import { usePathname } from 'src/routes/hooks';
-import { RouterLink } from 'src/routes/components';
+import { usePathname } from "src/routes/hooks";
+import { RouterLink } from "src/routes/components";
 
-import { useResponsive } from 'src/hooks/use-responsive';
+import { useResponsive } from "src/hooks/use-responsive";
 
-import Logo from 'src/components/logo';
-import Scrollbar from 'src/components/scrollbar';
+import { SelectTeachingCenter } from "src/store/auth.reducer";
 
-import { NAV } from './config-layout';
-import navConfig from './config-navigation';
+import Logo from "src/components/logo";
+import Scrollbar from "src/components/scrollbar";
+
+import { NAV } from "./config-layout";
+import navConfig from "./config-navigation";
 
 // ----------------------------------------------------------------------
 
 export default function Nav({ openNav, onCloseNav }) {
   const pathname = usePathname();
 
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector(SelectTeachingCenter);
 
-  const upLg = useResponsive('up', 'lg');
+  const upLg = useResponsive("up", "lg");
 
   useEffect(() => {
     if (openNav) {
@@ -39,17 +41,17 @@ export default function Nav({ openNav, onCloseNav }) {
         mx: 2.5,
         py: 2,
         px: 0,
-        display: 'flex',
+        display: "flex",
         borderRadius: 1.5,
-        alignItems: 'center',
+        alignItems: "center",
         bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
       }}
     >
       <Box sx={{ ml: 2 }}>
         <Typography variant="subtitle2">{user?.name}</Typography>
 
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {user?.role}
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          Admin
         </Typography>
       </Box>
     </Box>
@@ -67,10 +69,10 @@ export default function Nav({ openNav, onCloseNav }) {
     <Scrollbar
       sx={{
         height: 1,
-        '& .simplebar-content': {
+        "& .simplebar-content": {
           height: 1,
-          display: 'flex',
-          flexDirection: 'column',
+          display: "flex",
+          flexDirection: "column",
         },
       }}
     >
@@ -95,7 +97,7 @@ export default function Nav({ openNav, onCloseNav }) {
         <Box
           sx={{
             height: 1,
-            position: 'fixed',
+            position: "fixed",
             width: NAV.WIDTH,
             borderRight: (theme) => `dashed 1px ${theme.palette.divider}`,
           }}
@@ -138,15 +140,15 @@ function NavItem({ item }) {
       sx={{
         minHeight: 44,
         borderRadius: 0.75,
-        typography: 'body2',
-        color: 'text.secondary',
-        textTransform: 'capitalize',
-        fontWeight: 'fontWeightMedium',
+        typography: "body2",
+        color: "text.secondary",
+        textTransform: "capitalize",
+        fontWeight: "fontWeightMedium",
         ...(active && {
-          color: 'primary.main',
-          fontWeight: 'fontWeightSemiBold',
+          color: "primary.main",
+          fontWeight: "fontWeightSemiBold",
           bgcolor: (theme) => alpha(theme.palette.primary.main, 0.08),
-          '&:hover': {
+          "&:hover": {
             bgcolor: (theme) => alpha(theme.palette.primary.main, 0.16),
           },
         }),
