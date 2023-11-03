@@ -31,7 +31,7 @@ export const authReducerSlice = createSlice({
         localStorage.setItem("user", JSON.stringify(payload));
         state.teaching_center = payload?.data.teaching_center;
         state.token = payload.data.token;
-        state.isAuthenticated = Boolean(payload?.data.teaching_center);
+        state.isAuthenticated = true;
       }
     );
     builder.addMatcher(
@@ -40,7 +40,7 @@ export const authReducerSlice = createSlice({
         localStorage.setItem("user", JSON.stringify(payload));
         state.teaching_center = payload?.data.teaching_center;
         state.token = payload.data.token;
-        state.isAuthenticated = Boolean(payload?.data.teaching_center);
+        state.isAuthenticated = true;
       }
     );
     builder.addMatcher(
