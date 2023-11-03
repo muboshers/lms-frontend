@@ -13,7 +13,7 @@ const store = configureStore({
     getDefaultMiddleware({ serializableCheck: false }).concat(
       baseApi.middleware
     ),
-  devTools: process.env.NODE_ENV === "development",
+  devTools: true,
 });
 
 setupListeners(store.dispatch);
