@@ -43,15 +43,15 @@ export const authReducerSlice = createSlice({
         state.isAuthenticated = true;
       }
     );
-    builder.addMatcher(
-      authApiReq.endpoints.getMeInfo.matchRejected,
-      (state) => {
-        localStorage.removeItem("user");
-        state.teaching_center = null;
-        state.token = null;
-        state.isAuthenticated = false;
-      }
-    );
+    // builder.addMatcher(
+    //   authApiReq.endpoints.getMeInfo.matchRejected,
+    //   (state) => {
+    //     localStorage.removeItem("user");
+    //     state.teaching_center = null;
+    //     state.token = null;
+    //     state.isAuthenticated = false;
+    //   }
+    // );
   },
 });
 
