@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 // @mui
-import { Box, Link, Stack, Typography, Breadcrumbs } from '@mui/material';
+import { Box, Link, Stack, Typography, Breadcrumbs } from "@mui/material";
 
 //
-import LinkItem from './LinkItem';
+import LinkItem from "./LinkItem";
 
 // ----------------------------------------------------------------------
 
@@ -16,8 +16,6 @@ export default function CustomBreadcrumbs({
   sx,
   ...other
 }) {
-  const lastLink = links[links.length - 1].name;
-
   return (
     <Box sx={{ mb: 5, ...sx }}>
       <Stack direction="row" alignItems="center">
@@ -34,10 +32,9 @@ export default function CustomBreadcrumbs({
             <Breadcrumbs separator={<Separator />} {...other}>
               {links.map((link) => (
                 <LinkItem
-                  key={link.name || ''}
+                  key={link.name || ""}
                   link={link}
                   activeLast={activeLast}
-                  disabled={link.name === lastLink}
                 />
               ))}
             </Breadcrumbs>
@@ -58,7 +55,7 @@ export default function CustomBreadcrumbs({
               variant="body2"
               target="_blank"
               rel="noopener"
-              sx={{ display: 'table' }}
+              sx={{ display: "table" }}
             >
               {href}
             </Link>
@@ -75,7 +72,12 @@ function Separator() {
   return (
     <Box
       component="span"
-      sx={{ width: 4, height: 4, borderRadius: '50%', bgcolor: 'text.disabled' }}
+      sx={{
+        width: 4,
+        height: 4,
+        borderRadius: "50%",
+        bgcolor: "text.disabled",
+      }}
     />
   );
 }

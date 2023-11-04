@@ -6,7 +6,10 @@ import { isTokenExpried } from "src/utils/jsonwebtoken";
 
 import DashboardLayout from "src/layouts/dashboard/DashboardLayout";
 
-export const BlogPage = lazy(() => import("src/pages/blog"));
+import { TEACHING_CENTER_DASHBOARD_PATH } from "./path";
+
+export const BlogPage = lazy(() => import("src/pages/group"));
+export const TeacherListPage = lazy(() => import("src/pages/teacher-list"));
 export const LoginPage = lazy(() => import("src/pages/login"));
 export const Page404 = lazy(() => import("src/pages/page-not-found"));
 
@@ -28,8 +31,15 @@ export default function Router() {
           </Suspense>
         </DashboardLayout>
       ),
-      children: [{ element: <BlogPage />, index: true }],
+      children: [
+        { element: <BlogPage />, index: true },
+        {
+          path: TEACHING_CENTER_DASHBOARD_PATH.TEACHERS_LIST,
+          element: <TeacherListPage />,
+        },
+      ],
     },
+
     {
       path: "404",
       element: <Page404 />,

@@ -1,6 +1,6 @@
 export function colorToRGBA(color, alpha = 1.0) {
-  if (typeof color === 'string') {
-    if (color[0] === '#') {
+  if (typeof color === "string") {
+    if (color[0] === "#") {
       color = color.slice(1);
     }
     if (color.length !== 6) {
@@ -19,3 +19,9 @@ export function colorToRGBA(color, alpha = 1.0) {
 
   return color;
 }
+
+export const spaceToSlash = (string) => {
+  if (!string || typeof string !== "string") return "";
+
+  return string.replaceAll(" ", "-");
+};

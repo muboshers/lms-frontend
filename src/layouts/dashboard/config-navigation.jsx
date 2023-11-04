@@ -1,36 +1,41 @@
-import SvgColor from 'src/components/svg-color';
+import { TEACHING_CENTER_DASHBOARD_PATH } from "src/routes/path";
+
+import SvgColor from "src/components/svg-color";
 
 // ----------------------------------------------------------------------
 
 const icon = (name) => (
-  <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
+  <SvgColor
+    src={`/assets/icons/navbar/${name}.svg`}
+    sx={{ width: 1, height: 1 }}
+  />
 );
 
 const navConfig = [
   {
-    title: 'Kategoriyalar',
-    path: '/',
-    icon: icon('ic_analytics'),
+    title: "Guruhlar",
+    path: "/",
+    icon: icon("ic_users_group"),
   },
   {
-    title: 'Mijozlar',
-    path: '/clients',
-    icon: icon('ic_user'),
+    title: "O'qituvchilar",
+    path: TEACHING_CENTER_DASHBOARD_PATH.TEACHERS_LIST,
+    icon: icon("ic_user"),
   },
   {
-    title: 'Mahsulotlar',
-    path: '/products',
-    icon: icon('ic_cart'),
+    title: "Mahsulotlar",
+    path: "/products",
+    icon: icon("ic_cart"),
   },
   {
-    title: 'Buyurtmalar',
-    path: '/orders',
-    icon: icon('ic_blog'),
+    title: "Buyurtmalar",
+    path: "/orders",
+    icon: icon("ic_blog"),
   },
   {
-    title: 'Ranglar',
-    path: '/color',
-    icon: icon('ic_color'),
+    title: "Ranglar",
+    path: "/color",
+    icon: icon("ic_color"),
   },
 ];
 

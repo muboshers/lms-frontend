@@ -7,7 +7,7 @@ import { useGetMeInfoQuery } from "src/api/auth-api-req";
 
 import Nav from "./nav";
 import Main from "./main";
-import Header from "./header";
+import Header  from "./header";
 
 // ----------------------------------------------------------------------
 
