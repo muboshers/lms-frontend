@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import { Grid, Stack, Button } from "@mui/material";
 
+import { useRouter } from "src/routes/hooks";
 import { TEACHING_CENTER_DASHBOARD_PATH } from "src/routes/path";
 
 import { useGetGroupListQuery } from "src/api/group-api-req";
@@ -21,6 +22,8 @@ export default function GroupListView() {
 
   const location = useLocation();
 
+  const { push } = useRouter();
+
   const { data, isLoading, isFetching } = useGetGroupListQuery({
     page,
     search: new URLSearchParams(location.search)
@@ -33,6 +36,9 @@ export default function GroupListView() {
     // eslint-disable-next-line no-return-assign
     setPage((prev) => (prev += 1));
   };
+
+  const navigateToAddGroupPage = () =>
+    push(TEACHING_CENTER_DASHBOARD_PATH.GROUP_CREATE);
 
   const loading = isLoading || isFetching;
 
@@ -50,7 +56,12 @@ export default function GroupListView() {
           },
         ]}
         action={
-          <Button color="inherit" variant="contained">
+          <Button
+            type="button"
+            onClick={navigateToAddGroupPage}
+            color="inherit"
+            variant="contained"
+          >
             Yangi Guruh Qo&apos;shish
           </Button>
         }
@@ -67,7 +78,7 @@ export default function GroupListView() {
               <GroupCardLoading />
             </Grid>
             <Grid item md={2} sm={6} xs={6}>
-              <GroupCardLoading />  
+              <GroupCardLoading />
             </Grid>
             <Grid item md={2} sm={6} xs={6}>
               <GroupCardLoading />
