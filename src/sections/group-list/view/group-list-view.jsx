@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { LoadingButton } from "@mui/lab";
-import { Grid, Stack, Button } from "@mui/material";
+import { Grid, Stack, Button, Container } from "@mui/material";
 
 import { useRouter } from "src/routes/hooks";
 import { TEACHING_CENTER_DASHBOARD_PATH } from "src/routes/path";
@@ -45,7 +45,7 @@ export default function GroupListView() {
   const notFound = data?.data?.length === 0 && !loading;
 
   return (
-    <>
+    <Container>
       <CustomBreadcrumbs
         heading="Guruhlar "
         links={[
@@ -74,19 +74,19 @@ export default function GroupListView() {
       <Grid container spacing={2}>
         {loading ? (
           <>
-            <Grid item md={2} sm={6} xs={6}>
+            <Grid item md={3} sm={6} xs={6}>
               <GroupCardLoading />
             </Grid>
-            <Grid item md={2} sm={6} xs={6}>
+            <Grid item md={3} sm={6} xs={6}>
               <GroupCardLoading />
             </Grid>
-            <Grid item md={2} sm={6} xs={6}>
+            <Grid item md={3} sm={6} xs={6}>
               <GroupCardLoading />
             </Grid>
           </>
         ) : (
           data?.data?.map((group) => (
-            <Grid item md={2} sm={6} xs={6} key={group._id}>
+            <Grid item md={3} sm={6} xs={6} key={group._id}>
               <GroupCard data={group} />
             </Grid>
           ))
@@ -106,6 +106,6 @@ export default function GroupListView() {
           </LoadingButton>
         </Stack>
       )}
-    </>
+    </Container>
   );
 }
