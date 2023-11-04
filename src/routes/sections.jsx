@@ -8,7 +8,8 @@ import DashboardLayout from "src/layouts/dashboard/DashboardLayout";
 
 import { TEACHING_CENTER_DASHBOARD_PATH } from "./path";
 
-export const BlogPage = lazy(() => import("src/pages/group"));
+export const GroupListPage = lazy(() => import("src/pages/group"));
+export const GroupCreatePage = lazy(() => import("src/pages/group-create"));
 export const TeacherListPage = lazy(() => import("src/pages/teacher-list"));
 export const LoginPage = lazy(() => import("src/pages/login"));
 export const Page404 = lazy(() => import("src/pages/page-not-found"));
@@ -21,7 +22,7 @@ export default function Router() {
   const ISTOKENEXRIED = useMemo(() => isTokenExpried(teachingCenter?.token), [
     teachingCenter,
   ]);
-
+  
   const routes = useRoutes([
     {
       element: (
@@ -32,10 +33,14 @@ export default function Router() {
         </DashboardLayout>
       ),
       children: [
-        { element: <BlogPage />, index: true },
+        { element: <GroupListPage />, index: true },
         {
           path: TEACHING_CENTER_DASHBOARD_PATH.TEACHERS_LIST,
           element: <TeacherListPage />,
+        },
+        {
+          path: TEACHING_CENTER_DASHBOARD_PATH.GROUP_CREATE,
+          element: <GroupCreatePage />,
         },
       ],
     },
