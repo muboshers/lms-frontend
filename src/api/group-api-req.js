@@ -15,7 +15,16 @@ export const groupApiReq = baseApi.injectEndpoints({
       },
       transformErrorResponse: (error) => ErrorHandle(error),
     }),
+
+    createGroup: mutation({
+      query: (arg) => ({
+        url: GROUP.CREATE,
+        method: "POST",
+        body: arg.body,
+      }),
+      transformErrorResponse: (error) => ErrorHandle(error),
+    }),
   }),
 });
 
-export const { useGetGroupListQuery } = groupApiReq;
+export const { useGetGroupListQuery, useCreateGroupMutation } = groupApiReq;

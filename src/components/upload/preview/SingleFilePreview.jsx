@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 //
-import Image from '../../image';
+import Image from "../../image";
 
 // ----------------------------------------------------------------------
 
@@ -9,8 +9,8 @@ export default function SingleFilePreview({ file }) {
     return null;
   }
 
-  const imgUrl = typeof file === 'string' ? file : file.preview;
-
+  const imgUrl = typeof file === "string" ? file : file.preview;
+  
   return (
     <Image
       alt="file preview"
@@ -20,9 +20,9 @@ export default function SingleFilePreview({ file }) {
         left: 8,
         zIndex: 8,
         borderRadius: 1,
-        position: 'absolute',
-        width: 'calc(100% - 16px)',
-        height: 'calc(100% - 16px)',
+        position: "absolute",
+        width: "calc(100% - 16px)",
+        height: "calc(100% - 16px)",
       }}
     />
   );

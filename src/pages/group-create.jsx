@@ -1,6 +1,8 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 
+import NewGroupPage from "src/sections/group-create/view";
+
 export default function GroupCreate() {
   return (
     <>
@@ -8,7 +10,7 @@ export default function GroupCreate() {
         <title>Guruh q&apos;shish | EduHub uz</title>
       </Helmet>
 
-      <h1>NEw Group page</h1>
+      <NewGroupPage />
     </>
   );
 }

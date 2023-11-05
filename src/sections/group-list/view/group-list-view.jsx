@@ -10,6 +10,7 @@ import { TEACHING_CENTER_DASHBOARD_PATH } from "src/routes/path";
 
 import { useGetGroupListQuery } from "src/api/group-api-req";
 
+import Iconify from "src/components/iconify";
 import CustomBreadcrumbs from "src/components/custom-breadcrumbs";
 
 import GroupCard from "../group-card";
@@ -61,6 +62,7 @@ export default function GroupListView() {
             onClick={navigateToAddGroupPage}
             color="inherit"
             variant="contained"
+            startIcon={<Iconify icon="mdi:add" />}
           >
             Yangi Guruh Qo&apos;shish
           </Button>

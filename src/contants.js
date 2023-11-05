@@ -3,3 +3,12 @@ const isProductionMode = process.env.NODE_ENV === "production";
 export const baseURL = isProductionMode
   ? "https://lms-management.vercel.app/v1/api/"
   : "http://localhost:5000/v1/api/";
+
+export const IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
+
+export const CLEAVE_SUM_CONFIG = {
+  numeral: true,
+  delimiter: " ",
+  numeralDecimalMark: ".",
+  numeralPositiveOnly: true,
+};

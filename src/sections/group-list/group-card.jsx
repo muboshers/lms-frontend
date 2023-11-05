@@ -10,13 +10,14 @@ export default function GroupCard({ data }) {
     <Card
       sx={{
         padding: 1.5,
+        height: "100%",
       }}
     >
       <img
         style={{
           width: "100%",
           height: "100%",
-          maxHeight: "218px",
+          maxHeight: "150px",
           borderRadius: "8px",
           objectFit: "contain",
         }}

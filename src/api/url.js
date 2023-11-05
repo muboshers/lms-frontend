@@ -9,3 +9,12 @@ export const GROUP = {
   UPDATE: "group/update",
   DELETE: "group/delete",
 };
+
+export const FILE = {
+  UPLOAD: "file/upload",
+  SINGLE_UPLOAD: "file/single-upload",
+};
+
+export const TEACHER = {
+  GET_LIST: "teacher/list",
+};

@@ -64,7 +64,6 @@ export default function Upload({
   const hasFile = !!file && !multiple;
 
   const hasFiles = files && multiple && files.length > 0;
-
   const isError = isDragReject || !!error;
 
   return (
