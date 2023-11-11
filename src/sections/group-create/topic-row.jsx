@@ -3,10 +3,15 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 
 import { Box, Stack, IconButton } from "@mui/material";
 
-import { CLEAVE_SUM_CONFIG } from "src/contants";
+import { WEEK_DAYS, CLEAVE_SUM_CONFIG } from "src/contants";
 
 import Iconify from "src/components/iconify";
-import { RHFCleaveField } from "src/components/hook-form";
+import {
+  RHFTextField,
+  RHFDatePicker,
+  RHFCleaveField,
+  RHFAutocomplete,
+} from "src/components/hook-form";
 
 import TeacherSearch from "./teacher-search";
 
@@ -23,6 +28,10 @@ export default function TopicRow() {
       teacher_id: "",
       price: "",
       percentage: "",
+      during_month: "",
+      start_date: new Date(),
+      week_days: [],
+      time_of_day: "",
     });
 
   const handleRemoveField = (index) => remove(index);
@@ -40,7 +49,7 @@ export default function TopicRow() {
             <RHFCleaveField
               name={`topics.${index}.price`}
               label="Narhini yozing"
-              helperText="Har bir o'quvchi uchun"
+              helperText="Har bir o'quvchi uchun (oylik)"
               options={CLEAVE_SUM_CONFIG}
             />
             <RHFCleaveField
@@ -51,6 +60,32 @@ export default function TopicRow() {
             <TeacherSearch
               name={`topics.${index}.teacher_id`}
               setValue={setValue}
+            />
+            <RHFTextField
+              name={`topics.${index}.during_month`}
+              inputProps={{
+                maxLength: 2,
+              }}
+              helperText="O'quv muddati davomiyligi oy hisabida"
+            />
+          </Stack>
+
+          <Stack flexDirection="row" gap={1} marginTop={1}>
+            <RHFAutocomplete
+              multiple
+              fullWidth
+              name={`topics.${index}.week_days`}
+              options={WEEK_DAYS.map((option) => option.value)}
+              label="Hafta kunlarini tanlang"
+            />
+            <RHFDatePicker name={`topics.${index}.start_date`} />
+
+            <RHFTextField
+              name={`topics.${index}.time_of_day`}
+              inputProps={{
+                maxLength: 5,
+              }}
+              helperText="O'quv dasturining soati va daqiqasini yozing (kunlik)"
             />
           </Stack>
 

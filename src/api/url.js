@@ -8,6 +8,8 @@ export const GROUP = {
   CREATE: "group/create",
   UPDATE: "group/update",
   DELETE: "group/delete",
+  GET_BY_ID:'group/get' // it takes ids
+
 };
 
 export const FILE = {
@@ -15,6 +17,11 @@ export const FILE = {
   SINGLE_UPLOAD: "file/single-upload",
 };
 
+export const TOPIC = {
+  CREATE:'topic/create'
+}
+
 export const TEACHER = {
   GET_LIST: "teacher/list",
 };
+

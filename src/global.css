@@ -6,6 +6,7 @@
   height: 100%;
 }
 
+
 .swiper .swiper-pagination-bullet.swiper-pagination-bullet-active {
   background-color: #fff !important;
   opacity: 1 !important;
@@ -14,4 +15,10 @@
 .swiper .swiper-pagination-bullet {
   background-color: #fff !important;
   opacity: 0.8 !important;
+}
+
+
+.container {
+  max-width: 1300px !important;
+  margin: 0 auto;
 }

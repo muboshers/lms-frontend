@@ -38,7 +38,6 @@ export default function TeacherSearch({name, setValue}) {
         return () => clearTimeout(getTeacherData);
     }, [searchTerm]);
 
-
     useEffect(() => {
         document.addEventListener("click", () => {
             if (isFocus) {
@@ -61,6 +60,7 @@ export default function TeacherSearch({name, setValue}) {
                 fullWidth
                 onChange={(event) => setSearchTerm(event.target.value)}
                 onFocus={() => setIsFocus(true)}
+                onClick={(event) => event.stopPropagation()}
             />
 
             {teacherListData?.length > 0 && isFocus && (
@@ -77,7 +77,8 @@ export default function TeacherSearch({name, setValue}) {
                         {teacherListData.map((teacher) => (
                             <MenuItem
                                 key={teacher._id}
-                                onClick={() => {
+                                onClick={(event) => {
+                                    event.stopPropagation()
                                     setSearchTerm(teacher.name);
                                     setValue(name, teacher?._id);
                                     setIsFocus(false);

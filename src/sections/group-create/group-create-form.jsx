@@ -41,6 +41,13 @@ export default function GroupCreateForm() {
         percentage: yup
           .string()
           .required("O'qituvchining % foizi talab etiladi)"),
+        week_days: yup.array().min(1).required("Hafta kunlari talab etiladi"),
+        during_month: yup
+          .string()
+          .max(2, "Siz kiritgan muddat xato!")
+          .required("Davomiylik muddati talab etiladi (oy hisobida)"),
+        start_date: yup.string().required("Boshlanish sanasi talab etiladi"),
+        time_of_day: yup.string().required("Soatini yozish talab etiladi"),
       })
     ),
   });
@@ -56,6 +63,10 @@ export default function GroupCreateForm() {
         teacher_id: "",
         price: "",
         percentage: "",
+        during_month: "",
+        start_date: new Date(),
+        week_days: [],
+        time_of_day: "",
       },
     ],
   };
@@ -123,6 +134,7 @@ export default function GroupCreateForm() {
     };
 
     const topics = data?.topics?.map((topic) => ({
+      ...topic,
       percentage: parseInt(topic.percentage, 10),
       price: parseInt(topic.percentage, 10),
       teacher_id: topic.teacher_id,

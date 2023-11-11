@@ -3,9 +3,14 @@ import PropTypes from "prop-types";
 
 import { Card, Stack, Tooltip, Typography } from "@mui/material";
 
+import { useRouter } from "src/routes/hooks";
+import { TEACHING_CENTER_DASHBOARD_PATH } from "src/routes/path";
+
 import Iconify from "src/components/iconify";
 
 export default function GroupCard({ data }) {
+  const { push } = useRouter();
+
   return (
     <Card
       sx={{
@@ -29,8 +34,12 @@ export default function GroupCard({ data }) {
       <Typography
         sx={{
           fontWeight: "500",
+          cursor: "pointer",
         }}
         mb={1}
+        onClick={() =>
+          push(`${TEACHING_CENTER_DASHBOARD_PATH.GROUP_VIEW}/${data._id}`)
+        }
       >
         {data.name}
       </Typography>

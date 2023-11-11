@@ -11,6 +11,7 @@ import { TEACHING_CENTER_DASHBOARD_PATH } from "./path";
 export const GroupListPage = lazy(() => import("src/pages/group"));
 export const GroupCreatePage = lazy(() => import("src/pages/group-create"));
 export const TeacherListPage = lazy(() => import("src/pages/teacher-list"));
+export const GroupViewPage = lazy(() => import("src/pages/group-view"));
 export const LoginPage = lazy(() => import("src/pages/login"));
 export const Page404 = lazy(() => import("src/pages/page-not-found"));
 
@@ -22,7 +23,7 @@ export default function Router() {
   const ISTOKENEXRIED = useMemo(() => isTokenExpried(teachingCenter?.token), [
     teachingCenter,
   ]);
-  
+
   const routes = useRoutes([
     {
       element: (
@@ -41,6 +42,10 @@ export default function Router() {
         {
           path: TEACHING_CENTER_DASHBOARD_PATH.GROUP_CREATE,
           element: <GroupCreatePage />,
+        },
+        {
+          path: `${TEACHING_CENTER_DASHBOARD_PATH.GROUP_VIEW}/:id`,
+          element: <GroupViewPage />,
         },
       ],
     },

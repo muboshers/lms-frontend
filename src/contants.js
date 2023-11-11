@@ -12,3 +12,23 @@ export const CLEAVE_SUM_CONFIG = {
   numeralDecimalMark: ".",
   numeralPositiveOnly: true,
 };
+
+export const WEEK_DAYS = [
+  { value: "Dush" },
+  { value: "Sesh" },
+  {
+    value: "Chor",
+  },
+  {
+    value: "Pay",
+  },
+  {
+    value: "Juma",
+  },
+  {
+    value: "Shan",
+  },
+  {
+    value: "Yak",
+  },
+];
