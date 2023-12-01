@@ -18,7 +18,8 @@ export const FILE = {
 };
 
 export const TOPIC = {
-  CREATE:'topic/create'
+  CREATE:'topic/create',
+  UPDATE:'topic/update' // it takes id
 }
 
 export const TEACHER = {
