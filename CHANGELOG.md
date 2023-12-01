@@ -1,3 +1,15 @@
+#### 1.8.0 (2023-12-01)
+
+##### Other Changes
+
+*  topic edit form (b8d54b62)
+*  RHFCleaveField component (b576e532)
+*  topic api endpoint (898f3d22)
+*  CHANGELOG.MD setup (e98e624e)
+*  README.md (9371e79e)
+*  README.md (539b79a6)
+* //github.com/minimal-ui-kit/material-kit-react into main (a58bf6b4)
+
 ### v1.8.0
 
 ###### Wed 11, 2023
