@@ -1,95 +1,118 @@
-/* eslint-disable react/jsx-no-useless-fragment */
-import PropTypes from "prop-types";
-import React, {useState, useEffect} from "react";
+/* eslint-disable func-names */
+import PropTypes from 'prop-types';
+import React, { useState, useEffect, useCallback } from 'react';
 
-import {Box, Card, MenuItem, TextField} from "@mui/material";
+import { Box, Card, MenuItem, TextField } from '@mui/material';
 
-import {TEACHER} from "src/api/url";
-import {axiosInstance} from "src/api";
+import { TEACHER } from 'src/api/url';
+import { axiosInstance } from 'src/api';
 
-import Scrollbar from "src/components/scrollbar";
+import Scrollbar from 'src/components/scrollbar';
 
 TeacherSearch.propTypes = {
-    name: PropTypes.string,
-    setValue: PropTypes.any,
+  name: PropTypes.string,
+  setValue: PropTypes.any,
+  defaultValue: PropTypes.string,
 };
 
-export default function TeacherSearch({name, setValue}) {
-    const [searchTerm, setSearchTerm] = useState("");
+export default function TeacherSearch({ name, setValue, defaultValue }) {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [teacherListData, setTeacherListData] = useState([]);
+  const [isFocus, setIsFocus] = useState(false);
 
-    const [teacherListData, setTeacherListData] = useState([]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSearch = useCallback(
+    debounce(async (term) => {
+      try {
+        const query = term ? `?search=${term}` : '';
+        const teacherList = await axiosInstance.get(`${TEACHER.GET_LIST}${query}`);
+        setTeacherListData(teacherList?.data?.data ?? []);
+      } catch (error) {
+        console.error(error.message);
+      }
+    }, 2000),
+    []
+  );
 
-    const [isFocus, setIsFocus] = useState(false);
+  useEffect(() => {
+    const handleClickOutside = () => {
+      if (isFocus) {
+        setIsFocus(false);
+      }
+    };
 
-    useEffect(() => {
-        const getTeacherData = setTimeout(async () => {
-            try {
-                const query = searchTerm ? `?search=${searchTerm}` : "";
-                const teacherList = await axiosInstance.get(
-                    `${TEACHER.GET_LIST}${query}`
-                );
+    document.addEventListener('click', handleClickOutside);
 
-                setTeacherListData(teacherList?.data?.data ?? []);
-            } catch (error) {
-                console.log(error.message);
-            }
-        }, 2000);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        return () => clearTimeout(getTeacherData);
-    }, [searchTerm]);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [isFocus]);
 
-    useEffect(() => {
-        document.addEventListener("click", () => {
-            if (isFocus) {
-                setIsFocus(false)
-            }
-        })
-    }, [isFocus]);
+  useEffect(() => {
+    setSearchTerm(defaultValue);
+  }, [defaultValue]);
 
-    return (
-        <Box
-            sx={{
-                width: "100%",
-                position: "relative",
-                zIndex: 10,
-            }}
+  const handleInputChange = (event) => {
+    const { value } = event.target;
+    setSearchTerm(value);
+    setIsFocus(true);
+    debouncedSearch(value);
+  };
+
+  const handleMenuItemClick = (teacher) => (event) => {
+    event.stopPropagation();
+    setSearchTerm(teacher.name);
+    setValue(name, teacher?._id);
+    setIsFocus(false);
+  };
+
+  return (
+    <Box
+      sx={{
+        width: '100%',
+        position: 'relative',
+        zIndex: 10,
+      }}
+    >
+      <TextField
+        label="O'qituvchini qidiring"
+        value={searchTerm}
+        fullWidth
+        onChange={handleInputChange}
+        onFocus={() => setIsFocus(true)}
+        onClick={(event) => event.stopPropagation()}
+      />
+
+      {teacherListData?.length > 0 && isFocus && (
+        <Card
+          sx={{
+            maxHeight: '120px',
+            position: 'absolute',
+            width: '100%',
+            borderRadius: '8px',
+            marginTop: '10px',
+          }}
         >
-            <TextField
-                label="O'qituvchini qidiring"
-                value={searchTerm}
-                fullWidth
-                onChange={(event) => setSearchTerm(event.target.value)}
-                onFocus={() => setIsFocus(true)}
-                onClick={(event) => event.stopPropagation()}
-            />
+          <Scrollbar>
+            {teacherListData.map((teacher) => (
+              <MenuItem key={teacher._id} onClick={handleMenuItemClick(teacher)}>
+                {teacher.name} {teacher?.phone_number}
+              </MenuItem>
+            ))}
+          </Scrollbar>
+        </Card>
+      )}
+    </Box>
+  );
+}
 
-            {teacherListData?.length > 0 && isFocus && (
-                <Card
-                    sx={{
-                        maxHeight: "120px",
-                        position: "absolute",
-                        width: "100%",
-                        borderRadius: "8px",
-                        marginTop: "10px",
-                    }}
-                >
-                    <Scrollbar>
-                        {teacherListData.map((teacher) => (
-                            <MenuItem
-                                key={teacher._id}
-                                onClick={(event) => {
-                                    event.stopPropagation()
-                                    setSearchTerm(teacher.name);
-                                    setValue(name, teacher?._id);
-                                    setIsFocus(false);
-                                }}
-                            >
-                                {teacher.name} {teacher?.phone_number}
-                            </MenuItem>
-                        ))}
-                    </Scrollbar>
-                </Card>
-            )}
-        </Box>
-    );
+// Debounce function
+function debounce(callback, delay) {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      callback(...args);
+    }, delay);
+  };
 }
