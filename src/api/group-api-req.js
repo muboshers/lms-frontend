@@ -32,6 +32,16 @@ export const groupApiReq = baseApi.injectEndpoints({
       invalidatesTags: (success, error) => (error ? [] : ['GROUP']),
     }),
 
+    updateGroup: mutation({
+      query: (arg) => ({
+        url: `${GROUP.UPDATE}/${arg.id}`,
+        method: 'PATCH',
+        body: arg.body,
+      }),
+      transformErrorResponse: (error) => ErrorHandle(error),
+      invalidatesTags: (success, error) => (error ? [] : ['GROUP']),
+    }),
+
     deleteGroup: mutation({
       query: (arg) => ({
         url: `${GROUP.DELETE}/${arg.id}`,
@@ -48,4 +58,5 @@ export const {
   useCreateGroupMutation,
   useDeleteGroupMutation,
   useGetGroupByIdQuery,
+  useUpdateGroupMutation,
 } = groupApiReq;

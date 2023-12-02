@@ -1,28 +1,27 @@
-import { useSelector } from "react-redux";
-import { lazy, useMemo, Suspense } from "react";
-import { Outlet, Navigate, useRoutes } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { lazy, useMemo, Suspense } from 'react';
+import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
-import { isTokenExpried } from "src/utils/jsonwebtoken";
+import { isTokenExpried } from 'src/utils/jsonwebtoken';
 
-import DashboardLayout from "src/layouts/dashboard/DashboardLayout";
+import DashboardLayout from 'src/layouts/dashboard/DashboardLayout';
 
-import { TEACHING_CENTER_DASHBOARD_PATH } from "./path";
+import { TEACHING_CENTER_DASHBOARD_PATH } from './path';
 
-export const GroupListPage = lazy(() => import("src/pages/group"));
-export const GroupCreatePage = lazy(() => import("src/pages/group-create"));
-export const TeacherListPage = lazy(() => import("src/pages/teacher-list"));
-export const GroupViewPage = lazy(() => import("src/pages/group-view"));
-export const LoginPage = lazy(() => import("src/pages/login"));
-export const Page404 = lazy(() => import("src/pages/page-not-found"));
+export const GroupListPage = lazy(() => import('src/pages/group'));
+export const GroupCreatePage = lazy(() => import('src/pages/group-create'));
+export const GroupEditPage = lazy(() => import('src/pages/group-edit'));
+export const TeacherListPage = lazy(() => import('src/pages/teacher-list'));
+export const GroupViewPage = lazy(() => import('src/pages/group-view'));
+export const LoginPage = lazy(() => import('src/pages/login'));
+export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
   const teachingCenter = useSelector((state) => state.teachingCenter);
 
-  const ISTOKENEXRIED = useMemo(() => isTokenExpried(teachingCenter?.token), [
-    teachingCenter,
-  ]);
+  const ISTOKENEXRIED = useMemo(() => isTokenExpried(teachingCenter?.token), [teachingCenter]);
 
   const routes = useRoutes([
     {
@@ -44,6 +43,10 @@ export default function Router() {
           element: <GroupCreatePage />,
         },
         {
+          path: `${TEACHING_CENTER_DASHBOARD_PATH.GROUP_EDIT}/:id`,
+          element: <GroupEditPage />,
+        },
+        {
           path: `${TEACHING_CENTER_DASHBOARD_PATH.GROUP_VIEW}/:id`,
           element: <GroupViewPage />,
         },
@@ -51,18 +54,14 @@ export default function Router() {
     },
 
     {
-      path: "404",
+      path: '404',
       element: <Page404 />,
     },
     {
-      path: "*",
+      path: '*',
       element: <Navigate to="/404" replace />,
     },
   ]);
 
-  return teachingCenter?.isAuthenticated && ISTOKENEXRIED ? (
-    routes
-  ) : (
-    <LoginPage />
-  );
+  return teachingCenter?.isAuthenticated && ISTOKENEXRIED ? routes : <LoginPage />;
 }

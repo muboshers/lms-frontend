@@ -62,7 +62,10 @@ export default function GroupCard({ data, delFn }) {
           <IconButton color="error" onClick={delFn}>
             <Iconify icon="lets-icons:trash" />
           </IconButton>
-          <IconButton color="success">
+          <IconButton
+            color="success"
+            onClick={() => push(`${TEACHING_CENTER_DASHBOARD_PATH.GROUP_EDIT}/${data._id}`)}
+          >
             <Iconify icon="tabler:edit" />
           </IconButton>
         </Stack>
