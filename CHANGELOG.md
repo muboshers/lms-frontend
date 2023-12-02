@@ -1,3 +1,21 @@
+#### 1.8.0 (2023-12-02)
+
+##### New Features
+
+*  Group delete api connected (79087bde)
+
+##### Other Changes
+
+*  group edit (dadb4394)
+*  topic creata api connected (b8e9799f)
+*  topic edit form (b8d54b62)
+*  RHFCleaveField component (b576e532)
+*  topic api endpoint (898f3d22)
+*  CHANGELOG.MD setup (e98e624e)
+*  README.md (9371e79e)
+*  README.md (539b79a6)
+* //github.com/minimal-ui-kit/material-kit-react into main (a58bf6b4)
+
 #### 1.8.0 (2023-12-01)
 
 ##### Other Changes
