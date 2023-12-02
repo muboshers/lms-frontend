@@ -10,9 +10,10 @@ import { fDate, fToNow } from '../../utils/format-time';
 TopicRow.propTypes = {
   topicRow: PropTypes.any,
   handleEditFn: PropTypes.func,
+  openDeleteWarnModal: PropTypes.func,
 };
 
-export function TopicRow({ topicRow, handleEditFn }) {
+export function TopicRow({ topicRow, handleEditFn, openDeleteWarnModal }) {
   const [open, setOpen] = useState(null);
 
   const handleOpenMenu = (event) => {
@@ -25,7 +26,12 @@ export function TopicRow({ topicRow, handleEditFn }) {
 
   const editFn = () => {
     handleEditFn(topicRow);
-    handleCloseMenu(false);
+    handleCloseMenu();
+  };
+
+  const deleteFn = () => {
+    openDeleteWarnModal(topicRow);
+    handleCloseMenu();
   };
 
   return (
@@ -66,7 +72,7 @@ export function TopicRow({ topicRow, handleEditFn }) {
           Yangilash
         </MenuItem>
 
-        <MenuItem onClick={handleCloseMenu} sx={{ color: 'error.main' }}>
+        <MenuItem onClick={deleteFn} sx={{ color: 'error.main' }}>
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
           O&apos;chirish
         </MenuItem>

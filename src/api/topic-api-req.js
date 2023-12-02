@@ -23,7 +23,16 @@ export const topicApiReq = baseApi.injectEndpoints({
       transformErrorResponse: (error) => ErrorHandle(error),
       invalidatesTags: (_, error) => (error ? [] : ['GROUP_BY_ID']),
     }),
+    deleteTopic: mutation({
+      query: (arg) => ({
+        url: `${TOPIC.DELETE}/${arg.id}`,
+        method: 'DELETE',
+      }),
+      transformErrorResponse: (error) => ErrorHandle(error),
+      invalidatesTags: (_, error) => (error ? [] : ['GROUP_BY_ID']),
+    }),
   }),
 });
 
-export const { useCreateTopicMutation, useUpdateTopicMutation } = topicApiReq;
+export const { useCreateTopicMutation, useDeleteTopicMutation, useUpdateTopicMutation } =
+  topicApiReq;
