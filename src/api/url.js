@@ -7,7 +7,7 @@ export const GROUP = {
   GET_LIST: 'group/list',
   CREATE: 'group/create',
   UPDATE: 'group/update',
-  DELETE: 'group/delete',
+  DELETE: 'group/delete', // it tekes id
   GET_BY_ID: 'group/get', // it takes ids
 };
 
