@@ -26,6 +26,7 @@ export default function TeacherSearch({ name, setValue, watch }) {
   useEffect(() => {
     const getTeacherData = setTimeout(async () => {
       try {
+        if (!isFocus) return;
         const query = searchTerm ? `?search=${searchTerm}` : '';
         const teacherList = await axiosInstance.get(`${TEACHER.GET_LIST}${query}`);
 
@@ -34,10 +35,9 @@ export default function TeacherSearch({ name, setValue, watch }) {
         console.log(error.message);
       }
     }, 2000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => clearTimeout(getTeacherData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm]);
-
   useEffect(() => {
     const handleClose = () => setIsFocus(false);
 

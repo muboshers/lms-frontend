@@ -175,6 +175,7 @@ export default function GroupEditForm() {
     const { image, name, topics } = groupData.data;
 
     const topic = topics?.map((groupTopic) => ({
+      _id: groupTopic._id,
       teacher_id: {
         name: groupTopic?.teacher_id?.name,
         id: groupTopic?.teacher_id?._id,

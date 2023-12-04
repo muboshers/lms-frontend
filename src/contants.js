@@ -1,4 +1,4 @@
-const isProductionMode = process.env.NODE_ENV === "production";
+export const isProductionMode = process.env.NODE_ENV === "production";
 
 export const baseURL = isProductionMode
   ? "https://lms-management.vercel.app/v1/api/"
