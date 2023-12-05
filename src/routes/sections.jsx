@@ -13,6 +13,7 @@ export const GroupCreatePage = lazy(() => import('src/pages/group-create'));
 export const GroupEditPage = lazy(() => import('src/pages/group-edit'));
 export const TeacherListPage = lazy(() => import('src/pages/teacher-list'));
 export const GroupViewPage = lazy(() => import('src/pages/group-view'));
+export const SettingsPage = lazy(() => import('src/pages/settings-page'));
 export const LoginPage = lazy(() => import('src/pages/login'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
@@ -37,6 +38,10 @@ export default function Router() {
         {
           path: TEACHING_CENTER_DASHBOARD_PATH.TEACHERS_LIST,
           element: <TeacherListPage />,
+        },
+        {
+          path: TEACHING_CENTER_DASHBOARD_PATH.SETTINGS,
+          element: <SettingsPage />,
         },
         {
           path: TEACHING_CENTER_DASHBOARD_PATH.GROUP_CREATE,
