@@ -1,8 +1,6 @@
 export const isProductionMode = process.env.NODE_ENV === 'production';
 
-export const baseURL = isProductionMode
-  ? 'https://eduhub-backend.fly.dev/v1/api/'
-  : 'https://lms-management.vercel.app/v1/api/';
+export const baseURL = 'https://lms-management.vercel.app/v1/api/';
 
 export const IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
