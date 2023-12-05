@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-import { authApiReq } from "src/api/auth-api-req";
+import { authApiReq } from 'src/api/auth-api-req';
 
 const initialState = {
   teaching_center: null,
@@ -9,7 +9,7 @@ const initialState = {
 };
 
 export const authReducerSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     logOut: (state, action) => {
@@ -25,24 +25,18 @@ export const authReducerSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addMatcher(
-      authApiReq.endpoints.login.matchFulfilled,
-      (state, { payload }) => {
-        localStorage.setItem("user", JSON.stringify(payload));
-        state.teaching_center = payload?.data.teaching_center;
-        state.token = payload.data.token;
-        state.isAuthenticated = true;
-      }
-    );
-    builder.addMatcher(
-      authApiReq.endpoints.getMeInfo.matchFulfilled,
-      (state, { payload }) => {
-        localStorage.setItem("user", JSON.stringify(payload));
-        state.teaching_center = payload?.data.teaching_center;
-        state.token = payload.data.token;
-        state.isAuthenticated = true;
-      }
-    );
+    builder.addMatcher(authApiReq.endpoints.login.matchFulfilled, (state, { payload }) => {
+      localStorage.setItem('user', JSON.stringify(payload));
+      state.teaching_center = payload?.data.teaching_center;
+      state.token = payload.data.token;
+      state.isAuthenticated = true;
+    });
+    builder.addMatcher(authApiReq.endpoints.getMeInfo.matchFulfilled, (state, { payload }) => {
+      localStorage.setItem('user', JSON.stringify(payload));
+      state.teaching_center = payload?.data.teaching_center;
+      state.token = payload.data.token;
+      state.isAuthenticated = true;
+    });
     // builder.addMatcher(
     //   authApiReq.endpoints.getMeInfo.matchRejected,
     //   (state) => {
@@ -59,11 +53,9 @@ export const { logOut, login } = authReducerSlice.actions;
 
 const authReducer = authReducerSlice.reducer;
 
-export const SelectTeachingCenter = (state) =>
-  state.teachingCenter.teaching_center;
+export const SelectTeachingCenter = (state) => state.teachingCenter.teaching_center;
 
-export const SelectIsAuthenticated = (state) =>
-  state.teachingCenter.isAuthenticated;
+export const SelectIsAuthenticated = (state) => state.teachingCenter.isAuthenticated;
 
 export const SelectToken = (state) => state.teachingCenter.token;
 

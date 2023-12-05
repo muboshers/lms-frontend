@@ -66,6 +66,8 @@ export default function Upload({
   const hasFiles = files && multiple && files.length > 0;
   const isError = isDragReject || !!error;
 
+
+  
   return (
     <Box sx={{ width: 1, position: "relative", ...sx }}>
       <StyledDropZone

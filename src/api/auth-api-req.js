@@ -1,14 +1,14 @@
-import { ErrorHandle } from "src/utils/response";
+import { ErrorHandle } from 'src/utils/response';
 
-import { baseApi } from ".";
-import { AUTH } from "./url";
+import { baseApi } from '.';
+import { AUTH } from './url';
 
 export const authApiReq = baseApi.injectEndpoints({
   endpoints: ({ query, mutation }) => ({
     login: mutation({
       query: (arg) => ({
         url: `${AUTH.LOGIN}`,
-        method: "POST",
+        method: 'POST',
         body: { ...arg },
       }),
       transformErrorResponse: (err) => ErrorHandle(err),
@@ -16,6 +16,7 @@ export const authApiReq = baseApi.injectEndpoints({
 
     getMeInfo: query({
       query: () => AUTH.GET_ME,
+      providesTags: ['TEACHING_CENTER_PROFILE'],
     }),
   }),
 });

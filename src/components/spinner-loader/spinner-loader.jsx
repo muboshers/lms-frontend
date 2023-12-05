@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import "./spinner-loader.style.css";
+import './spinner-loader.style.css';
 
 export default function SpinnerLoader() {
   return (
     <div className="loader-wrapper">
-      <span className="loader" />s
+      <span className="loader" />
     </div>
   );
 }

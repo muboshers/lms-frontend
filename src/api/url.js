@@ -25,3 +25,7 @@ export const TOPIC = {
 export const TEACHER = {
   GET_LIST: 'teacher/list',
 };
+
+export const TEACHING_CENTER = {
+  UPDATE_PROFILE_INFO: 'teaching-center/profile',
+};
