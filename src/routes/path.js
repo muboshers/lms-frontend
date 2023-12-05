@@ -4,4 +4,5 @@ export const TEACHING_CENTER_DASHBOARD_PATH = {
   GROUP_CREATE: '/group/create',
   GROUP_EDIT: '/group/edit', // it takes id
   GROUP_VIEW: '/group-view', // it takes id
+  SETTINGS: '/settings', 
 };
