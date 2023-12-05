@@ -1,34 +1,34 @@
-export const isProductionMode = process.env.NODE_ENV === "production";
+export const isProductionMode = process.env.NODE_ENV === 'production';
 
 export const baseURL = isProductionMode
-  ? "https://lms-management.vercel.app/v1/api/"
-  : "http://localhost:5000/v1/api/";
+  ? 'https://eduhub-backend.fly.dev/v1/api/'
+  : 'https://lms-management.vercel.app/v1/api/';
 
-export const IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
+export const IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
 export const CLEAVE_SUM_CONFIG = {
   numeral: true,
-  delimiter: " ",
-  numeralDecimalMark: ".",
+  delimiter: ' ',
+  numeralDecimalMark: '.',
   numeralPositiveOnly: true,
 };
 
 export const WEEK_DAYS = [
-  { value: "Dush" },
-  { value: "Sesh" },
+  { value: 'Dush' },
+  { value: 'Sesh' },
   {
-    value: "Chor",
+    value: 'Chor',
   },
   {
-    value: "Pay",
+    value: 'Pay',
   },
   {
-    value: "Juma",
+    value: 'Juma',
   },
   {
-    value: "Shan",
+    value: 'Shan',
   },
   {
-    value: "Yak",
+    value: 'Yak',
   },
 ];
