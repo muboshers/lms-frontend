@@ -170,7 +170,7 @@ export default function GroupPageViewSection() {
                     ))
                   )}
                   <TableEmptyRows
-                    emptyRows={notFound ? 2 : 0}
+                    emptyRows={notFound ? 2 : 1}
                     height={80}
                     colsNum={Table_Head.length}
                   />
