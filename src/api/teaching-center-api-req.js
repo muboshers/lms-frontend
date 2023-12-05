@@ -11,7 +11,7 @@ export const teachingCenterApiReq = baseApi.injectEndpoints({
         method: 'PATCH',
         body: { ...arg },
       }),
-      invalidatesTags: (error) => (error ? [] : ['TEACHING_CENTER_PROFILE']),
+      invalidatesTags: (_, error) => (error ? [] : ['TEACHING_CENTER_PROFILE']),
       transformErrorResponse: (error) => ErrorHandle(error),
     }),
   }),
