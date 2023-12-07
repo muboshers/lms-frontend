@@ -1,18 +1,10 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { alpha } from "@mui/material/styles";
-import {
-  Box,
-  Avatar,
-  Popover,
-  Divider,
-  MenuItem,
-  IconButton,
-  Typography,
-} from "@mui/material/";
+import { alpha } from '@mui/material/styles';
+import { Box, Avatar, Popover, Divider, MenuItem, IconButton, Typography } from '@mui/material/';
 
-import { logOut, SelectTeachingCenter } from "src/store/auth.reducer";
+import { logOut, SelectTeachingCenter } from 'src/store/auth.reducer';
 
 // ----------------------------------------------------------------------
 
@@ -50,7 +42,7 @@ export default function AccountPopover() {
         }}
       >
         <Avatar
-          src={teachingCenter?.logo.url}
+          src={teachingCenter?.logo?.url}
           alt={teachingCenter?.name[0]}
           sx={{
             width: 36,
@@ -66,8 +58,8 @@ export default function AccountPopover() {
         open={!!open}
         anchorEl={open}
         onClose={handleClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         PaperProps={{
           sx: {
             p: 0,
@@ -81,20 +73,20 @@ export default function AccountPopover() {
           <Typography variant="subtitle2" noWrap>
             {teachingCenter?.name}
           </Typography>
-          <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
             {teachingCenter?.role}
           </Typography>
         </Box>
 
-        <Divider sx={{ borderStyle: "dashed" }} />
+        <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <Divider sx={{ borderStyle: "dashed", m: 0 }} />
+        <Divider sx={{ borderStyle: 'dashed', m: 0 }} />
 
         <MenuItem
           disableRipple
           disableTouchRipple
           onClick={handleLogOut}
-          sx={{ typography: "body2", color: "error.main", py: 1.5 }}
+          sx={{ typography: 'body2', color: 'error.main', py: 1.5 }}
         >
           Chiqish
         </MenuItem>
