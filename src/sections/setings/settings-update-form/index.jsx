@@ -48,7 +48,7 @@ export default function SettingsUpdateForm() {
       logo = null,
       location = '',
       name = '',
-      tg_bot_token = '',
+      tg_bot = {},
     } = teaching_center_data;
     reset({
       address,
@@ -58,7 +58,7 @@ export default function SettingsUpdateForm() {
       },
       location,
       name,
-      tg_bot_token,
+      tg_bot_token: tg_bot?.token ?? '',
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
