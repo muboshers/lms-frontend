@@ -14,7 +14,16 @@ export const teachingCenterApiReq = baseApi.injectEndpoints({
       invalidatesTags: (_, error) => (error ? [] : ['TEACHING_CENTER_PROFILE']),
       transformErrorResponse: (error) => ErrorHandle(error),
     }),
+    updateTgBot: mutation({
+      query: (arg) => ({
+        url: TEACHING_CENTER.UPDATE_TG_INFO,
+        method: 'PATCH',
+        body: { ...arg },
+      }),
+      invalidatesTags: (_, error) => (error ? [] : ['TEACHING_CENTER_PROFILE']),
+      transformErrorResponse: (error) => ErrorHandle(error),
+    }),
   }),
 });
 
-export const { useUpdateProfileMutation } = teachingCenterApiReq;
+export const { useUpdateProfileMutation, useUpdateTgBotMutation } = teachingCenterApiReq;

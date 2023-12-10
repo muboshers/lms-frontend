@@ -5,7 +5,6 @@ export const defaultValues = {
   address: '',
   location: '',
   name: '',
-  tg_bot_token: '',
 };
 
 export const useUpdataForm = () =>

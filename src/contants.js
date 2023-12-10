@@ -1,6 +1,8 @@
-export const isProductionMode = process.env.NODE_ENV !== 'production';
+export const isProductionMode = process.env.NODE_ENV === 'production';
 
-export const baseURL = 'https://lms-management.vercel.app/v1/api/';
+export const baseURL = isProductionMode
+  ? 'https://lms-management.vercel.app/v1/api/'
+  : 'http://localhost:5000/v1/api/';
 
 export const IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
@@ -30,3 +32,8 @@ export const WEEK_DAYS = [
     value: 'Yak',
   },
 ];
+
+export const SETTINGS_TABS = {
+  GENERAL: 'Asosiy',
+  TG_BOT: 'Telegram bot',
+};

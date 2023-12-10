@@ -28,4 +28,5 @@ export const TEACHER = {
 
 export const TEACHING_CENTER = {
   UPDATE_PROFILE_INFO: 'teaching-center/profile',
+  UPDATE_TG_INFO: 'teaching-center/update-tg',
 };

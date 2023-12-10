@@ -102,7 +102,6 @@ export default function SettingsUpdateForm() {
         </Stack>
         <Stack flexDirection="row" alignItems="center" gap={2}>
           <RHFTextField name="location" label="O'quv markaz joylashuvi*" />
-          <RHFTextField name="tg_bot_token" label="Telegram bot tokeni*" />
         </Stack>
       </Card>
       <Stack alignItems="flex-end" marginTop={2}>
