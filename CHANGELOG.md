@@ -1,3 +1,39 @@
+#### 1.8.0 (2023-12-10)
+
+##### New Features
+
+*  settings path join (cd0c910b)
+*  Group delete api connected (79087bde)
+
+##### Other Changes
+
+*  teacher list & teacher create api (d4a4f990)
+*  telegram bot settigns update (c1c5d227)
+*  baseURL (932846cb)
+*  account popover fix (b88af650)
+*  nav component (60715a41)
+*  logo component url issue fix (62215f9d)
+*  constants baseURL change (a3e54cf6)
+*  profile update get me endpoint (60799a04)
+*  base url change (839ad7b2)
+*  profile edit update component refactor (34ec0eba)
+*  Settings path add (6a5a986b)
+*   profile svg upload (343a204f)
+*  settings page add  to router (21f01833)
+*  settings page add (9af59576)
+*  group view section EmptyRows update (7c61ef15)
+*  all components (c5a6b7f3)
+*  CHANGELOG.md (db7b2a29)
+*  group edit (dadb4394)
+*  topic creata api connected (b8e9799f)
+*  topic edit form (b8d54b62)
+*  RHFCleaveField component (b576e532)
+*  topic api endpoint (898f3d22)
+*  CHANGELOG.MD setup (e98e624e)
+*  README.md (9371e79e)
+*  README.md (539b79a6)
+* //github.com/minimal-ui-kit/material-kit-react into main (a58bf6b4)
+
 #### 1.8.0 (2023-12-05)
 
 ##### New Features
