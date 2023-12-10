@@ -13,6 +13,12 @@ export const CLEAVE_SUM_CONFIG = {
   numeralPositiveOnly: true,
 };
 
+export const CLEAVE_PHONE_CONFIG = {
+  prefix: '+998',
+  numericOnly: true,
+  blocks: [4, 2, 3, 2, 2],
+};
+
 export const WEEK_DAYS = [
   { value: 'Dush' },
   { value: 'Sesh' },

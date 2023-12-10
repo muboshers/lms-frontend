@@ -24,6 +24,7 @@ export const TOPIC = {
 
 export const TEACHER = {
   GET_LIST: 'teacher/list',
+  CREATE: 'teacher/create',
 };
 
 export const TEACHING_CENTER = {

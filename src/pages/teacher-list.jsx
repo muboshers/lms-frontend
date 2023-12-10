@@ -1,14 +1,16 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
+import React from 'react';
+import { Helmet } from 'react-helmet-async';
 
-export default function TeacherList() {
+import { TeacherListView } from 'src/sections/teacher-list/view';
+
+export default function TeachersListPage() {
   return (
     <>
       <Helmet>
-        <title>O&apos;qituvchilar ro&apos;yhati | EduHub uz</title>
+        <title>O&apos;qituvchilar | Eduhub uz </title>
       </Helmet>
 
-      <h1>O&apos;qituvchilar ro&apos;yhati</h1>
+      <TeacherListView />
     </>
   );
 }
