@@ -6,8 +6,8 @@ import {format, getTime, formatDistanceToNow} from 'date-fns';
 export function fDate(date, newFormat) {
     const fm = newFormat || 'dd MMM yyyy';
 
-    return date ? format(new Date(date), fm,{
-        locale:uz
+    return date ? format(new Date(date), fm, {
+        locale: uz
     }) : '';
 }
 
@@ -32,4 +32,9 @@ export function fToNow(date) {
             locale: uz
         })
         : '';
+}
+
+
+export function emptyRows(page, rowsPerPage, arrayLength) {
+    return page ? Math.max(0, (1 + page) * rowsPerPage - arrayLength) : 0;
 }
