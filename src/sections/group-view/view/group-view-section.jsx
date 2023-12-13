@@ -7,8 +7,6 @@ import {Card, Table, Button, Container, TableBody, TableContainer} from '@mui/ma
 import {useGetGroupByIdQuery} from 'src/api/group-api-req';
 import {useDeleteTopicMutation} from 'src/api/topic-api-req';
 
-import SpinnerLoader from 'src/components/spinner-loader/spinner-loader';
-
 import {TopicRow} from '../topic-row';
 import {emptyRows} from "../../../utils/format-time";
 import Scrollbar from '../../../components/scrollbar';
@@ -16,7 +14,7 @@ import {TopicAddEditForm} from '../topic-add-edit-form';
 import {TopicDeleteConfirm} from '../topic-delete-confirm-modal';
 import {TEACHING_CENTER_DASHBOARD_PATH} from '../../../routes/path';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-import {ListHead, TableNoData, TableEmptyRows} from '../../../components/table';
+import {ListHead, TableNoData, TableEmptyRows, TableRowLoader} from '../../../components/table';
 
 export default function GroupPageViewSection() {
     const {id} = useParams();
@@ -125,7 +123,6 @@ export default function GroupPageViewSection() {
 
     return (
         <>
-            {loading && <SpinnerLoader/>}
 
             <Container>
                 <CustomBreadcrumbs
@@ -154,7 +151,10 @@ export default function GroupPageViewSection() {
                             <Table>
                                 <ListHead headLabel={Table_Head}/>
                                 <TableBody>
-                                    {notFound ? (
+                                    {loading && (
+                                        <TableRowLoader columsNum={Table_Head.length} rowsNum={5}/>
+                                    )}
+                                    {!loading && notFound ? (
                                         <TableNoData
                                             query="O'quv dasturlari topilmadi"
                                             subQuery="Yangi dastur qo'shib qaytadan urinib ko'ring"

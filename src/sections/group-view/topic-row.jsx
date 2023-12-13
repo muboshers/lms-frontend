@@ -4,8 +4,10 @@ import React, {useState} from 'react';
 import {Popover, TableRow, MenuItem, TableCell, IconButton} from '@mui/material';
 
 import {totalTeacherPrice} from './utils';
+import {useRouter} from "../../routes/hooks";
 import Iconify from '../../components/iconify';
 import {fDate, fToNow} from '../../utils/format-time';
+import {TEACHING_CENTER_DASHBOARD_PATH} from "../../routes/path";
 import {fCurrency, formatPhoneNumber} from "../../utils/format-number";
 
 TopicRow.propTypes = {
@@ -16,6 +18,8 @@ TopicRow.propTypes = {
 
 export function TopicRow({topicRow, handleEditFn, openDeleteWarnModal}) {
     const [open, setOpen] = useState(null);
+
+    const {push} = useRouter()
 
     const handleOpenMenu = (event) => {
         setOpen(event.currentTarget);
@@ -34,6 +38,7 @@ export function TopicRow({topicRow, handleEditFn, openDeleteWarnModal}) {
         openDeleteWarnModal(topicRow);
         handleCloseMenu();
     };
+
 
     return (
         <>
@@ -76,6 +81,12 @@ export function TopicRow({topicRow, handleEditFn, openDeleteWarnModal}) {
                 <MenuItem onClick={deleteFn} sx={{color: 'error.main'}}>
                     <Iconify icon="eva:trash-2-outline" sx={{mr: 2}}/>
                     O&apos;chirish
+                </MenuItem>
+
+                <MenuItem onClick={() => push(`${TEACHING_CENTER_DASHBOARD_PATH.TOPIC_VIEW}/${topicRow._id}`)}
+                          sx={{color: 'primary.main'}}>
+                    <Iconify icon="clarity:eye-show-line" sx={{mr: 2}}/>
+                    Ko&apos;rish
                 </MenuItem>
             </Popover>
         </>

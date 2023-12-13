@@ -1,40 +1,34 @@
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import {Popover, TableRow, MenuItem, TableCell, IconButton} from '@mui/material';
+import {Popover, MenuItem, TableRow, TableCell, IconButton} from '@mui/material';
 
 import Iconify from '../../components/iconify';
-import {fCurrency, formatPhoneNumber} from "../../utils/format-number";
+import {formatPhoneNumber} from "../../utils/format-number";
 
-TeacherTableRow.propTypes = {
+PupilsTableRow.propTypes = {
     age: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    pupils_count: PropTypes.number.isRequired,
-    teacher_income: PropTypes.number.isRequired,
-    phone_number: PropTypes.string.isRequired,
+    parent_contact_information: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired,
     index: PropTypes.number.isRequired,
-    setTeacherId: PropTypes.func,
-    login: PropTypes.string,
+    setPupilsId: PropTypes.func,
     setDeleteModalOpen: PropTypes.func,
-    setTeacherData: PropTypes.func,
+    setPupilsData: PropTypes.func,
     setIsOpen: PropTypes.func
 };
 
-export default function TeacherTableRow({
-                                            age,
-                                            name,
-                                            phone_number,
-                                            pupils_count,
-                                            teacher_income,
-                                            _id,
-                                            index,
-                                            setTeacherId,
-                                            login,
-                                            setDeleteModalOpen,
-                                            setTeacherData,
-                                            setIsOpen
-                                        }) {
+export default function PupilsTableRow({
+                                           age,
+                                           name,
+                                           parent_contact_information,
+                                           _id,
+                                           index,
+                                           setPupilsId,
+                                           setDeleteModalOpen,
+                                           setPupilsData,
+                                           setIsOpen
+                                       }) {
     const [open, setOpen] = useState(null);
 
     const handleOpenMenu = (event) => {
@@ -46,13 +40,10 @@ export default function TeacherTableRow({
     };
 
     const editFn = () => {
-        setTeacherData({
+        setPupilsData({
             age,
             name,
-            pupils_count,
-            teacher_income,
-            phone_number,
-            login,
+            parent_contact_information,
             _id,
         })
         setIsOpen(true)
@@ -60,7 +51,7 @@ export default function TeacherTableRow({
     };
 
     const deleteFn = () => {
-        setTeacherId(_id);
+        setPupilsId(_id);
         setDeleteModalOpen(true);
         handleCloseMenu();
     };
@@ -70,10 +61,8 @@ export default function TeacherTableRow({
             <TableRow>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{name}</TableCell>
-                <TableCell>{formatPhoneNumber(phone_number)}</TableCell>
+                <TableCell>{formatPhoneNumber(parent_contact_information)}</TableCell>
                 <TableCell>{age}</TableCell>
-                <TableCell>{pupils_count}</TableCell>
-                <TableCell>{fCurrency(teacher_income, '0,0.00')}</TableCell>
                 <TableCell>
                     <IconButton onClick={handleOpenMenu}>
                         <Iconify icon="eva:more-vertical-fill"/>

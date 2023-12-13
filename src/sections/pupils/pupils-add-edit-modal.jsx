@@ -6,50 +6,50 @@ import {LoadingButton} from '@mui/lab';
 import {Stack, Dialog, DialogTitle, DialogContent} from '@mui/material';
 
 import {CLEAVE_PHONE_CONFIG} from 'src/contants';
-import {useCreateTeacherMutation, useUpdateTeacherMutation} from 'src/api/teacher-api-req';
 
 import FormProvider from 'src/components/hook-form/RHFFormProvider';
 import {RHFTextField, RHFCleaveField} from 'src/components/hook-form';
 
-import {defaultValues, useTeacherForm} from './form';
+import {defaultValues, usePupilsForm} from './form';
 import {formatPhoneNumber} from "../../utils/format-number";
+import {useCreatePupilsMutation, useUpdatePupilsMutation} from "../../api/pupils-api-req";
 
-TeacherAddEditModal.propTypes = {
+PupilsAddEditModal.propTypes = {
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    teacherData: PropTypes.any,
-    setTeacherData: PropTypes.func
+    pupilsData: PropTypes.any,
+    setPupilsData: PropTypes.func
 };
 
-export default function TeacherAddEditModal({open, onClose, teacherData, setTeacherData}) {
-    const [createTeacher, createTeacherRes] = useCreateTeacherMutation();
-    const [updateTeacher, updateTeacherRes] = useUpdateTeacherMutation();
+export default function PupilsAddEditModal({open, onClose, pupilsData, setPupilsData}) {
+    const [createPupils, createPupilsRes] = useCreatePupilsMutation();
+    const [updatePupils, updatePupilsRes] = useUpdatePupilsMutation();
 
-    const methods = useTeacherForm();
+    const methods = usePupilsForm();
 
     const {handleSubmit, reset} = methods;
 
     const modalClose = () => {
         onClose()
         reset(defaultValues)
-        setTeacherData(null)
+        setPupilsData(null)
     }
 
 
     const onSubmit = (data) => {
-        if (teacherData?._id) {
-            const promise = updateTeacher({id: teacherData?._id, ...data})
+        if (pupilsData?._id) {
+            const promise = updatePupils({id: pupilsData?._id, ...data})
                 .unwrap()
                 .then(() => {
                     modalClose();
                 })
 
             toast.promise(promise, {
-                loading: `${teacherData?.name} ma'lumotlari o'zgartirilmoqda...`,
-                success: `${teacherData?.name} ma'lumotlari mufaqqiyatli yangilandi.`
+                loading: `${pupilsData?.name} ma'lumotlari o'zgartirilmoqda...`,
+                success: `${pupilsData?.name} ma'lumotlari mufaqqiyatli yangilandi.`
             })
         } else {
-            createTeacher(data)
+            createPupils(data)
                 .unwrap()
                 .then(() => {
                     toast.success("O'qituvchi mufaqqiyatli qo'shildi");
@@ -60,16 +60,21 @@ export default function TeacherAddEditModal({open, onClose, teacherData, setTeac
 
 
     useEffect(() => {
-        if (teacherData?._id) {
-            reset({...teacherData, phone_number: formatPhoneNumber(teacherData?.phone_number.toString())})
+        if (pupilsData?._id) {
+            reset({
+                ...pupilsData,
+                parent_contact_information: formatPhoneNumber(pupilsData?.parent_contact_information),
+            })
         }
 
+        console.log(pupilsData)
+
         // eslint-disable-next-line
-    }, [teacherData])
+    }, [pupilsData, reset])
 
     return (
         <Dialog open={open} onClose={modalClose}>
-            <DialogTitle>O&apos;qituvchi ma&apos;lumotlari</DialogTitle>
+            <DialogTitle>O&apos;quvchi ma&apos;lumotlari</DialogTitle>
             <DialogContent>
                 <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
                     <Stack
@@ -80,26 +85,24 @@ export default function TeacherAddEditModal({open, onClose, teacherData, setTeac
                             padding: '1rem 0',
                         }}
                     >
-                        <RHFTextField name="name" label="Ismi va Familiyasi"/>
+                        <RHFTextField name="name" label="Ismi va familiyasi"/>
                         <RHFTextField name="age" label="O'qituvchining yoshi"/>
                         <RHFCleaveField
-                            name="phone_number"
-                            label="O'qituvchining telefon raqami"
+                            name="parent_contact_information"
+                            label="Ota onasining telefon raqami"
                             options={CLEAVE_PHONE_CONFIG}
                         />
-                        <RHFTextField name="login" label="O'qituvchi uchin login"/>
-                        <RHFTextField name="password" label="O'qituvchi uchun parol" type="password"/>
                     </Stack>
                     <LoadingButton
                         fullWidth
                         type="submit"
-                        loading={createTeacherRes.isLoading || updateTeacherRes.isLoading}
+                        loading={createPupilsRes.isLoading || updatePupilsRes.isLoading}
                         sx={{marginTop: 1}}
                         variant="contained"
                         color="inherit"
                         size="large"
                     >
-                        {teacherData?._id ? 'Yangilash' : "Qo'shish"}
+                        {pupilsData?._id ? "Yangilash" : "Qo'shish"}
                     </LoadingButton>
                 </FormProvider>
             </DialogContent>

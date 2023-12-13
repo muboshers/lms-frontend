@@ -29,6 +29,14 @@ export const TEACHER = {
     UPDATE: 'teacher/update', // it takes id
 };
 
+export const PUPILS = {
+    GET_LIST: 'pupils/get-list',
+    CREATE: 'pupils/create',
+    DELETE: 'pupils/delete', // it takes id
+    UPDATE: 'pupils/update', // it takes id
+};
+
+
 export const TEACHING_CENTER = {
     UPDATE_PROFILE_INFO: 'teaching-center/profile',
     UPDATE_TG_INFO: 'teaching-center/update-tg',
