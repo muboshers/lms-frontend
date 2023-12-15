@@ -32,9 +32,9 @@ export const PupilsListView = () => {
 
     const TABLE_HEAD = [
         {label: 'N', alignRight: false},
-        {label: "O'qituvchining ismi", alignRight: false},
+        {label: "O'quvchining ismi", alignRight: false},
         {label: 'Telefon raqami', alignRight: false},
-        {label: "O'qituvchining yoshi", alignRight: false},
+        {label: "O'quvchining yoshi", alignRight: false},
     ];
 
     const isNotFound = !pupilsData || pupilsData.length === 0;

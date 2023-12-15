@@ -5,14 +5,14 @@ import React, {useEffect} from 'react';
 import {LoadingButton} from '@mui/lab';
 import {Stack, Dialog, DialogTitle, DialogContent} from '@mui/material';
 
-import {CLEAVE_PHONE_CONFIG} from 'src/contants';
 import {useCreateTeacherMutation, useUpdateTeacherMutation} from 'src/api/teacher-api-req';
 
 import FormProvider from 'src/components/hook-form/RHFFormProvider';
-import {RHFTextField, RHFCleaveField} from 'src/components/hook-form';
 
 import {defaultValues, useTeacherForm} from './form';
-import {formatPhoneNumber} from "../../utils/format-number";
+import {RHFTextField} from "../../components/hook-form";
+import RHFNumberFormatField from "../../components/hook-form/RHFNumberFormatField";
+
 
 TeacherAddEditModal.propTypes = {
     open: PropTypes.bool.isRequired,
@@ -31,8 +31,8 @@ export default function TeacherAddEditModal({open, onClose, teacherData, setTeac
 
     const modalClose = () => {
         onClose()
-        reset(defaultValues)
         setTeacherData(null)
+        reset(defaultValues)
     }
 
 
@@ -61,7 +61,7 @@ export default function TeacherAddEditModal({open, onClose, teacherData, setTeac
 
     useEffect(() => {
         if (teacherData?._id) {
-            reset({...teacherData, phone_number: formatPhoneNumber(teacherData?.phone_number.toString())})
+            reset({...teacherData})
         }
 
         // eslint-disable-next-line
@@ -82,10 +82,12 @@ export default function TeacherAddEditModal({open, onClose, teacherData, setTeac
                     >
                         <RHFTextField name="name" label="Ismi va Familiyasi"/>
                         <RHFTextField name="age" label="O'qituvchining yoshi"/>
-                        <RHFCleaveField
+                        <RHFNumberFormatField
                             name="phone_number"
                             label="O'qituvchining telefon raqami"
-                            options={CLEAVE_PHONE_CONFIG}
+                            format="+### ## ### ## ##"
+                            allowEmptyFormatting
+                            mask="_"
                         />
                         <RHFTextField name="login" label="O'qituvchi uchin login"/>
                         <RHFTextField name="password" label="O'qituvchi uchun parol" type="password"/>

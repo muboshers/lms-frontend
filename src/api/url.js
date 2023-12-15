@@ -33,7 +33,8 @@ export const PUPILS = {
     GET_LIST: 'pupils/get-list',
     CREATE: 'pupils/create',
     DELETE: 'pupils/delete', // it takes id
-    UPDATE: 'pupils/update', // it takes id
+    UPDATE: 'pupils/update', // it takes id,
+    GET_PUPILS_BY_TOPIC_ID: 'pupils/get-by-topic/', // it takes topic id
 };
 
 

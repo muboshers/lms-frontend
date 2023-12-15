@@ -30,6 +30,6 @@ export const baseApi = createApi({
             return headers;
         },
     }),
-    tagTypes: ['GROUP', 'TOPIC', 'GROUP_BY_ID', 'TEACHING_CENTER_PROFILE', 'TEACHER', 'PUPILS'],
+    tagTypes: ['GROUP', 'TOPIC', 'GROUP_BY_ID', 'TEACHING_CENTER_PROFILE', 'TEACHER', 'PUPILS', 'PUPILS_BY_TOPIC_ID'],
     endpoints: () => ({}),
 });

@@ -14,8 +14,8 @@ export const CLEAVE_SUM_CONFIG = {
 };
 
 export const CLEAVE_PHONE_CONFIG = {
+    prefix: "+998",
     blocks: [4, 2, 3, 2, 2],
-    prefix: '+998',
 };
 
 export const WEEK_DAYS = [

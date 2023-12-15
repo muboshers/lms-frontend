@@ -23,7 +23,7 @@ export const pupilsApiReq = baseApi.injectEndpoints({
                 body: {...arg},
             }),
             transformErrorResponse: (error) => ErrorHandle(error),
-            invalidatesTags: (_, error) => (error ? [] : ['PUPILS']),
+            invalidatesTags: (_, error) => (error ? [] : ['PUPILS', 'PUPILS_BY_TOPIC_ID']),
         }),
         updatePupils: mutation({
             query: (arg) => ({
@@ -32,15 +32,16 @@ export const pupilsApiReq = baseApi.injectEndpoints({
                 body: {...arg},
             }),
             transformErrorResponse: (error) => ErrorHandle(error),
-            invalidatesTags: (_, error) => (error ? [] : ['PUPILS']),
+            invalidatesTags: (_, error) => (error ? [] : ['PUPILS', 'PUPILS_BY_TOPIC_ID']),
         }),
         deletePupils: mutation({
             query: (arg) => ({
                 url: `${PUPILS.DELETE}/${arg.id}`,
+                data: {...arg},
                 method: 'DELETE',
             }),
             transformErrorResponse: (error) => ErrorHandle(error),
-            invalidatesTags: (_, error) => (error ? [] : ['PUPILS']),
+            invalidatesTags: (_, error) => (error ? [] : ['PUPILS', "PUPILS_BY_TOPIC_ID"]),
         }),
     }),
 });

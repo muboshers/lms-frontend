@@ -1,15 +1,17 @@
 import PropTypes from 'prop-types';
 import toast from 'react-hot-toast';
 import React, {useEffect} from 'react';
+import {useParams} from "react-router-dom";
 
 import {LoadingButton} from '@mui/lab';
 import {Stack, Dialog, DialogTitle, DialogContent} from '@mui/material';
+
+import {useCreatePupilsMutation, useUpdatePupilsMutation} from "src/api/pupils-api-req";
 
 import FormProvider from 'src/components/hook-form/RHFFormProvider';
 import {RHFTextField, RHFNumberFormatField} from 'src/components/hook-form';
 
 import {defaultValues, usePupilsForm} from './form';
-import {useCreatePupilsMutation, useUpdatePupilsMutation} from "../../api/pupils-api-req";
 
 PupilsAddEditModal.propTypes = {
     open: PropTypes.bool.isRequired,
@@ -21,6 +23,8 @@ PupilsAddEditModal.propTypes = {
 export default function PupilsAddEditModal({open, onClose, pupilsData, setPupilsData}) {
     const [createPupils, createPupilsRes] = useCreatePupilsMutation();
     const [updatePupils, updatePupilsRes] = useUpdatePupilsMutation();
+
+    const {id} = useParams()
 
     const methods = usePupilsForm();
 
@@ -35,7 +39,7 @@ export default function PupilsAddEditModal({open, onClose, pupilsData, setPupils
 
     const onSubmit = (data) => {
         if (pupilsData?._id) {
-            const promise = updatePupils({id: pupilsData?._id, ...data})
+            const promise = updatePupils({id: pupilsData?._id, ...data, topic_id: id,})
                 .unwrap()
                 .then(() => {
                     modalClose();
@@ -46,7 +50,7 @@ export default function PupilsAddEditModal({open, onClose, pupilsData, setPupils
                 success: `${pupilsData?.name} ma'lumotlari mufaqqiyatli yangilandi.`
             })
         } else {
-            createPupils(data)
+            createPupils({...data, topic_id: id,})
                 .unwrap()
                 .then(() => {
                     toast.success("O'quvchi mufaqqiyatli qo'shildi");

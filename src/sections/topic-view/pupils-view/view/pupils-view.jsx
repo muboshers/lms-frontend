@@ -1,17 +1,34 @@
 import React, {useState} from 'react';
+import {useParams} from "react-router-dom";
 
-import {Card, Table, Stack, Typography, TableContainer, TablePagination} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import {Card, Table, Stack, TableBody, Typography, TableContainer, TablePagination} from "@mui/material";
 
 import PupilsTableRow from "../pupils-table-row";
+import Iconify from "../../../../components/iconify";
 import Scrollbar from "../../../../components/scrollbar";
-import {ListHead, TableNoData} from "../../../../components/table";
+import PupilsAddEditModal from "../pupils-add-edit-modal";
+import PupilsDeleteWarningModal from "../pupils-delete-warning-modal";
+import {useGetPupilsListByTopicIdQuery} from "../../../../api/topic-api-req";
+import {ListHead, TableNoData, TableRowLoader} from "../../../../components/table";
 
 function PupilsView() {
 
-    const loading = false;
-
+    const {id} = useParams()
     const [page, setPage] = useState(0)
-    const [rowsPerPage, setRowsPerPage] = useState(0)
+    const [rowsPerPage, setRowsPerPage] = useState(10)
+    const [pupilsId, setPupilsId] = useState('');
+    const [isDeleteOpen, setDeleteOpen] = useState(false);
+    const [pupilsData, setPupilsData] = useState(null)
+    const [isOpen, setIsOpen] = useState(false)
+
+    const {data, isLoading, isFetching} = useGetPupilsListByTopicIdQuery({
+        id,
+        page,
+        limit: rowsPerPage,
+    })
+
+    const {data: pupilsList, totalCount} = data || {}
 
     const TABLE_HEAD = [
         {label: 'N', alignRight: false},
@@ -21,34 +38,7 @@ function PupilsView() {
     ];
 
 
-    const dummyData = [
-        {
-            _id: 'delkdewdkl434394384839',
-            name: "Mubosher Muydinov",
-            age: 22,
-            parent_contact_information: "+998484844848",
-        },
-        {
-            _id: 'delkdewdkl4343943834839',
-            name: "Bobir Maxmudov",
-            age: 42,
-            parent_contact_information: "+998484844846",
-        },
-        {
-            _id: 'delkdewdkl434d3943834839',
-            name: "Temur Obidov",
-            age: 62,
-            parent_contact_information: "+998906959999",
-        },
-        {
-            _id: 'delkdewdkl43443d3943834839',
-            name: "Sag'zi Mahmudov",
-            age: 32,
-            parent_contact_information: "+998903459999",
-        },
-    ]
-
-    const notFound = dummyData.length === 0 || !dummyData.length
+    const notFound = pupilsList?.length === 0 || !pupilsList?.length
 
 
     const handleChangePage = (event, newPage) => {
@@ -60,40 +50,83 @@ function PupilsView() {
         setPage(0);
     };
 
+    const loading = isLoading || isFetching
+
+    const modalClose = () => setIsOpen(false)
+
+    const handleDeleteModalClose = () => {
+        setDeleteOpen(false);
+        setPupilsId('');
+    };
+
+    const openDeleteFn = (row) => {
+        setPupilsId(row._id)
+        setDeleteOpen(true)
+    }
+
     return (
-        <Card>
-            <Stack flexDirection="row" alignItems="center" justifyContent="spaceBetween" padding={2}>
-                <Typography variant="h5">
-                    O&apos;quvchilar ro&apos;yhati
-                </Typography>
-            </Stack>
-            <Scrollbar>
-                <TableContainer>
-                    <Table>
-                        <ListHead headLabel={TABLE_HEAD}/>
-                        {notFound ? (
-                            <TableNoData colsNum={TABLE_HEAD.length} query="O'qituvchilar topilmadi"/>
-                        ) : !loading && dummyData?.map((pupils, index) => (
-                            <PupilsTableRow
-                                key={pupils.id}
-                                row={pupils}
-                                index={index + 1}
-                            />
-                        ))}
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    labelRowsPerPage="Qatorlar soni"
-                    page={page}
-                    count={dummyData.length}
-                    rowsPerPage={rowsPerPage}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-            </Scrollbar>
-        </Card>
+        <>
+            <Card>
+                <Stack flexDirection="row" alignItems="center" padding={2} sx={{
+                    justifyContent: "space-between"
+                }}>
+                    <Typography variant="h5">
+                        O&apos;quvchilar ro&apos;yhati
+                    </Typography>
+                    <IconButton onClick={() => setIsOpen(true)}>
+                        <Iconify icon="gala:add" color="primary.main"/>
+                    </IconButton>
+                </Stack>
+                <Scrollbar>
+                    <TableContainer>
+                        <Table>
+                            <ListHead headLabel={TABLE_HEAD}/>
+                            <TableBody>
+                                {loading && (
+                                    <TableRowLoader columsNum={TABLE_HEAD.length} rowsNum={5}/>
+                                )}
+
+                                {!loading && notFound ? (
+                                    <TableNoData colsNum={TABLE_HEAD.length} query="O'qituvchilar topilmadi"/>
+                                ) : !loading && pupilsList?.map((pupils, index) => (
+                                    <PupilsTableRow
+                                        key={pupils._id}
+                                        row={pupils}
+                                        index={index + 1}
+                                        deleteFn={() => openDeleteFn(pupils)}
+                                        setIsOpen={setIsOpen}
+                                        setPupilsData={setPupilsData}
+                                    />
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        labelRowsPerPage="Qatorlar soni"
+                        page={page}
+                        count={totalCount || 1}
+                        rowsPerPage={rowsPerPage}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                </Scrollbar>
+            </Card>
+
+            <PupilsAddEditModal
+                open={isOpen}
+                onClose={modalClose}
+                pupilsData={pupilsData}
+                setPupilsData={setPupilsData}
+            />
+            <PupilsDeleteWarningModal
+                open={isDeleteOpen}
+                onClose={handleDeleteModalClose}
+                pupilsId={pupilsId}
+            />
+        </>
+
     );
 }
 

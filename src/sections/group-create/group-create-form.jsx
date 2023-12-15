@@ -50,8 +50,8 @@ export default function GroupCreateForm() {
         topics: [
             {
                 teacher_id: '',
-                price: '',
-                percentage: '',
+                price: '0',
+                percentage: '0',
                 during_month: '',
                 start_date: new Date(),
                 week_days: [],
