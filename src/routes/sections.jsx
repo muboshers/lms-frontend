@@ -8,15 +8,16 @@ import DashboardLayout from 'src/layouts/dashboard/DashboardLayout';
 
 import {TEACHING_CENTER_DASHBOARD_PATH} from './path';
 
-export const GroupListPage = lazy(() => import('src/pages/group'));
-export const GroupCreatePage = lazy(() => import('src/pages/group-create'));
-export const GroupEditPage = lazy(() => import('src/pages/group-edit'));
-export const TeacherListPage = lazy(() => import('src/pages/teacher-list'));
-export const PupilsPage = lazy(() => import('src/pages/pupils'));
-export const TopicViewPage = lazy(() => import('src/pages/topic-view'));
-export const TeacherDeggreesPage = lazy(() => import('src/pages/group-create'));
-export const GroupViewPage = lazy(() => import('src/pages/group-view'));
-export const SettingsPage = lazy(() => import('src/pages/settings-page'));
+export const GroupListPage = lazy(() => import('src/pages/director/group'));
+export const GroupCreatePage = lazy(() => import('src/pages/director/group-create'));
+export const GroupEditPage = lazy(() => import('src/pages/director/group-edit'));
+export const TeacherListPage = lazy(() => import('src/pages/director/teacher-list'));
+export const PupilsPage = lazy(() => import('src/pages/director/pupils'));
+export const TopicViewPage = lazy(() => import('src/pages/director/topic-view'));
+export const TopicSectionViewPage = lazy(() => import('src/pages/director/topic-sections'));
+export const TeacherDeggreesPage = lazy(() => import('src/pages/director/group-create'));
+export const GroupViewPage = lazy(() => import('src/pages/director/group-view'));
+export const SettingsPage = lazy(() => import('src/pages/director/settings-page'));
 export const LoginPage = lazy(() => import('src/pages/login'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
@@ -47,7 +48,7 @@ export default function Router() {
                     element: <PupilsPage/>,
                 },
                 {
-                    path: `${TEACHING_CENTER_DASHBOARD_PATH.TEACHER_DEGRESS}/:id`,
+                    path: `${TEACHING_CENTER_DASHBOARD_PATH.TEACHER_DEGREES}/:id`,
                     element: <TeacherDeggreesPage/>,
                 },
                 {
@@ -69,6 +70,10 @@ export default function Router() {
                 {
                     path: `${TEACHING_CENTER_DASHBOARD_PATH.TOPIC_VIEW}/:id`,
                     element: <TopicViewPage/>,
+                },
+                {
+                    path: `${TEACHING_CENTER_DASHBOARD_PATH.TOPIC_SECTION_VIEW}/:id`,
+                    element: <TopicSectionViewPage/>,
                 },
             ],
         },

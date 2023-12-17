@@ -1,1 +1,0 @@
-export {default as PupilsView} from "./pupils-view"

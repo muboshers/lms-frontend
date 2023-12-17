@@ -16,6 +16,17 @@ export const topicApiReq = baseApi.injectEndpoints({
             transformErrorResponse: (error) => ErrorHandle(error),
             providesTags: ['PUPILS_BY_TOPIC_ID'],
         }),
+        getSectionsListByTopicId: query({
+            query: (arg) => {
+                let url = `${TOPIC.GET_SECTIONS_BY_TOPIC_ID}${arg.id}?`;
+                if (arg?.page) url += `&page=${parseInt(arg?.page, 10)}`
+                if (arg?.limit) url += `&limit=${arg?.limit}`
+                if (arg.search && arg?.search !== "") url += `&search=${arg?.search}`;
+                return url;
+            },
+            transformErrorResponse: (error) => ErrorHandle(error),
+            providesTags: ['TOPIC_SECTIONS'],
+        }),
         createTopic: mutation({
             query: (arg) => ({
                 url: TOPIC.CREATE,
@@ -24,6 +35,14 @@ export const topicApiReq = baseApi.injectEndpoints({
             }),
             transformErrorResponse: (error) => ErrorHandle(error),
             invalidatesTags: (_, error) => (error ? [] : ['GROUP_BY_ID']),
+        }),
+        createSectionToTopic: mutation({
+            query: (arg) => ({
+                url: `${TOPIC.ADD_SECTION_TOPIC}${arg.topic_id}`,
+                method: 'POST',
+                body: {...arg.body},
+            }),
+            invalidatesTags: (_, error) => (error ? [] : ['TOPIC_SECTIONS']),
         }),
         updateTopic: mutation({
             query: (arg) => ({
@@ -49,6 +68,7 @@ export const {
     useCreateTopicMutation,
     useDeleteTopicMutation,
     useUpdateTopicMutation,
-    useGetPupilsListByTopicIdQuery
-} =
-    topicApiReq;
+    useGetPupilsListByTopicIdQuery,
+    useGetSectionsListByTopicIdQuery,
+    useCreateSectionToTopicMutation,
+} = topicApiReq;

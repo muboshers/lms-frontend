@@ -20,9 +20,7 @@ const RHFNumberFormatField = ({
                     if (type === "Numeric") {
                         return (
                             <NumericFormat
-                                onChange={(event) => {
-                                    field.onChange(event.target.value.replaceAll(",", ""))
-                                }}
+                                onValueChange={(event) => field.onChange(event.value)}
                                 onBlur={field.onBlur}
                                 name={field.name}
                                 disabled={field.disabled}
