@@ -11,13 +11,13 @@ import CustomBreadcrumbs from "../../../../components/custom-breadcrumbs";
 import {useGetSectionsListByTopicIdQuery} from "../../../../api/topic-api-req";
 
 export function TopicSectionsView() {
-    const {id, isLoading, isFetching} = useParams()
+    const {id,} = useParams()
 
     const [page, setPage] = useState(1)
 
     const [open, setOpen] = useState(false)
 
-    const {data} = useGetSectionsListByTopicIdQuery({
+    const {data, isLoading, isFetching} = useGetSectionsListByTopicIdQuery({
         id,
         page,
     })
@@ -43,15 +43,15 @@ export function TopicSectionsView() {
                         width: "100%",
                         marginBottom: "20px"
                     }}>
-                        {loading && Array(5).fill(",").map((_, index) => (
+                        {loading ? Array(5).fill(",").map((_, index) => (
                             <TopicSectionsCardLoading key={index}/>
-                        ))}
-                        {data?.sectionList?.map(section => (
+                        )) : data?.sectionList?.map(section => (
                             <TopicSectionsCard
                                 key={section?._id}
                                 section={section}
                             />
                         ))}
+
                     </Box>
                     <Pagination
                         count={data?.totalPages}
