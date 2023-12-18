@@ -22,6 +22,8 @@ export const TOPIC = {
     DELETE: 'topic/delete', // it takes id
     GET_SECTIONS_BY_TOPIC_ID: 'topic/get-section/', // it takes id
     ADD_SECTION_TOPIC: 'topic/create-section/', // it takes id
+    UPDATE_SECTION_TOPIC: 'topic/update-section/', // it takes id
+    DELETE_SECTION_TOPIC: 'topic/delete-section/', // it takes id
 };
 
 export const TEACHER = {

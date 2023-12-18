@@ -9,6 +9,7 @@ import {TEACHING_CENTER_DASHBOARD_PATH} from "../../../../routes/path";
 import {TopicSectionsCardLoading} from "../topic-sections-card.loading";
 import CustomBreadcrumbs from "../../../../components/custom-breadcrumbs";
 import {useGetSectionsListByTopicIdQuery} from "../../../../api/topic-api-req";
+import TopicSectionDeleteWarningModal from "../topic-section-delete-warning-modal";
 
 export function TopicSectionsView() {
     const {id,} = useParams()
@@ -17,10 +18,26 @@ export function TopicSectionsView() {
 
     const [open, setOpen] = useState(false)
 
+    const [sectionsData, setSectionsData] = useState(null)
+
+    const [deleteWarning, setDeleteWarning] = useState(false)
+
+    const [sectionId, setSectionId] = useState(null)
+
     const {data, isLoading, isFetching} = useGetSectionsListByTopicIdQuery({
         id,
         page,
     })
+
+    const onClose = () => {
+        setOpen(false)
+        setSectionsData(null)
+    }
+
+    const delOnClose = () => {
+        setDeleteWarning(false)
+        setSectionId(null)
+    }
 
     const loading = isLoading || isFetching
 
@@ -49,6 +66,10 @@ export function TopicSectionsView() {
                             <TopicSectionsCard
                                 key={section?._id}
                                 section={section}
+                                setOpen={setOpen}
+                                setSectionId={setSectionId}
+                                setSectionsData={setSectionsData}
+                                setDeleteWarning={setDeleteWarning}
                             />
                         ))}
 
@@ -63,8 +84,15 @@ export function TopicSectionsView() {
             <SectionAddEditForm
                 open={open}
                 topic_id={id}
-                onClose={() => setOpen(false)}
+                sectionsData={sectionsData}
+                onClose={onClose}
             />`
+
+            <TopicSectionDeleteWarningModal
+                open={deleteWarning}
+                onClose={delOnClose}
+                section_id={sectionId}
+            />
         </>
 
     );

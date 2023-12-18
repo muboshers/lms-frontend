@@ -44,6 +44,21 @@ export const topicApiReq = baseApi.injectEndpoints({
             }),
             invalidatesTags: (_, error) => (error ? [] : ['TOPIC_SECTIONS']),
         }),
+        updateSectionToTopic: mutation({
+            query: (arg) => ({
+                url: `${TOPIC.UPDATE_SECTION_TOPIC}${arg.section_id}`,
+                method: 'PATCH',
+                body: {...arg.body},
+            }),
+            invalidatesTags: (_, error) => (error ? [] : ['TOPIC_SECTIONS']),
+        }),
+        deleteSectionToTopic: mutation({
+            query: (arg) => ({
+                url: `${TOPIC.DELETE_SECTION_TOPIC}${arg.section_id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: (_, error) => (error ? [] : ['TOPIC_SECTIONS']),
+        }),
         updateTopic: mutation({
             query: (arg) => ({
                 url: `${TOPIC.UPDATE}/${arg.id}`,
@@ -71,4 +86,6 @@ export const {
     useGetPupilsListByTopicIdQuery,
     useGetSectionsListByTopicIdQuery,
     useCreateSectionToTopicMutation,
+    useUpdateSectionToTopicMutation,
+    useDeleteSectionToTopicMutation,
 } = topicApiReq;
