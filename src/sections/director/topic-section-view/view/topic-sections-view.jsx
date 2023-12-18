@@ -86,7 +86,7 @@ export function TopicSectionsView() {
                 topic_id={id}
                 sectionsData={sectionsData}
                 onClose={onClose}
-            />`
+            />
 
             <TopicSectionDeleteWarningModal
                 open={deleteWarning}
