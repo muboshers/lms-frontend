@@ -11,7 +11,8 @@ TopicSectionsCard.propTypes = {
     setSectionsData: PropTypes.func,
     setOpen: PropTypes.func,
     setSectionId: PropTypes.func,
-    setDeleteWarning: PropTypes.func
+    setDeleteWarning: PropTypes.func,
+    provided: PropTypes.any
 }
 
 export function TopicSectionsCard({
@@ -19,7 +20,8 @@ export function TopicSectionsCard({
                                       setSectionsData,
                                       setOpen,
                                       setSectionId,
-                                      setDeleteWarning
+                                      setDeleteWarning,
+                                      provided
                                   }) {
 
     const handleEditFn = () => {
@@ -36,7 +38,11 @@ export function TopicSectionsCard({
         <Card sx={{
             padding: 2,
             marginTop: 2
-        }}>
+        }}
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+        >
             <Stack flexDirection="row" alignItems="center" justifyContent="space-between">
                 <Typography variant="subtitle2">
                     {section.name}

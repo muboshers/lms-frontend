@@ -24,6 +24,7 @@ export const TOPIC = {
     ADD_SECTION_TOPIC: 'topic/create-section/', // it takes id
     UPDATE_SECTION_TOPIC: 'topic/update-section/', // it takes id
     DELETE_SECTION_TOPIC: 'topic/delete-section/', // it takes id
+    SORT_SECTION_TOPIC: 'topic/sort-section/', // it takes id
 };
 
 export const TEACHER = {

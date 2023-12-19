@@ -52,6 +52,13 @@ export const topicApiReq = baseApi.injectEndpoints({
             }),
             invalidatesTags: (_, error) => (error ? [] : ['TOPIC_SECTIONS']),
         }),
+        sortSectionByTopicId: mutation({
+            query: (arg) => ({
+                url: `${TOPIC.SORT_SECTION_TOPIC}${arg.topic_id}`,
+                method: 'PATCH',
+                body: {...arg.body},
+            }),
+        }),
         deleteSectionToTopic: mutation({
             query: (arg) => ({
                 url: `${TOPIC.DELETE_SECTION_TOPIC}${arg.section_id}`,
@@ -88,4 +95,5 @@ export const {
     useCreateSectionToTopicMutation,
     useUpdateSectionToTopicMutation,
     useDeleteSectionToTopicMutation,
+    useSortSectionByTopicIdMutation
 } = topicApiReq;
