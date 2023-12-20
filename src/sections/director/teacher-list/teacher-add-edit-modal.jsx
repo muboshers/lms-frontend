@@ -87,6 +87,7 @@ export default function TeacherAddEditModal({open, onClose, teacherData, setTeac
                             label="O'qituvchining telefon raqami"
                             format="+### ## ### ## ##"
                             allowEmptyFormatting
+                            type="Pattern"
                             mask="_"
                         />
                         <RHFTextField name="login" label="O'qituvchi uchin login"/>

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 
 import IconButton from "@mui/material/IconButton";
-import {Card, Stack, Typography} from "@mui/material";
+import {Box, Card, Stack, Typography} from "@mui/material";
 
 import Iconify from "../../../components/iconify";
 
@@ -35,28 +35,40 @@ export function TopicSectionsCard({
     }
 
     return (
-        <Card sx={{
-            padding: 2,
-            marginTop: 2
-        }}
-              ref={provided.innerRef}
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
+        <Stack flexDirection="row" alignItems="center" gap={2}
+               ref={provided.innerRef}
+               {...provided.draggableProps}
         >
-            <Stack flexDirection="row" alignItems="center" justifyContent="space-between">
-                <Typography variant="subtitle2">
-                    {section.name}
-                </Typography>
 
-                <Stack flexDirection="row" alignItems="center" gap={2}>
-                    <IconButton type="button" onClick={handleEditFn}>
-                        <Iconify icon="fe:edit" color="success.main"/>
-                    </IconButton>
-                    <IconButton type="button" onClick={handleDeleteFn}>
-                        <Iconify icon="fluent:delete-12-regular" color="error.main"/>
-                    </IconButton>
+            <Box
+                {...provided.dragHandleProps}
+            >
+                <Iconify
+                    icon="icon-park-outline:drag"/>
+            </Box>
+
+            <Card sx={{
+                padding: 2,
+                marginTop: 2,
+                width: "100%"
+            }}
+            >
+                <Stack flexDirection="row" alignItems="center" justifyContent="space-between">
+                    <Typography variant="subtitle2">
+                        {section.name}
+                    </Typography>
+
+                    <Stack flexDirection="row" alignItems="center" gap={2}>
+                        <IconButton type="button" onClick={handleEditFn}>
+                            <Iconify icon="fe:edit" color="success.main"/>
+                        </IconButton>
+                        <IconButton type="button" onClick={handleDeleteFn}>
+                            <Iconify icon="fluent:delete-12-regular" color="error.main"/>
+                        </IconButton>
+                    </Stack>
                 </Stack>
-            </Stack>
-        </Card>
+            </Card>
+        </Stack>
+
     );
 }

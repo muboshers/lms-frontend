@@ -153,5 +153,3 @@ export function TopicSectionsView() {
     );
 }
 
-// icon-park-outline:drag
-

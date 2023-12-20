@@ -85,6 +85,7 @@ export default function PupilsAddEditModal({open, onClose, pupilsData, setPupils
                             label="Ota onasining telefon raqami"
                             format="+### ## ### ## ##"
                             allowEmptyFormatting
+                            type="Pattern"
                             mask="_"
                         />
                     </Stack>

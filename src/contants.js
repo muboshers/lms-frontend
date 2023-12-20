@@ -2,7 +2,7 @@ export const isProductionMode = process.env.NODE_ENV === 'production';
 
 export const baseURL = isProductionMode
     ? 'https://lms-management.vercel.app/v1/api/'
-    : 'http://localhost:3000/v1/api/';
+    : 'https://lms-management.vercel.app/v1/api/';
 
 export const IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
