@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card, Container } from '@mui/material';
+import { Box, Card, Container } from '@mui/material';
 
 import Body from '../body';
 import Aside from '../aside';
@@ -10,30 +10,31 @@ export default function Chats() {
     <Container>
       <Card
         sx={{
-          height: '450px',
+          height: '750px',
           width: '100%',
+          display: 'flex',
         }}
       >
         <aside
           style={{
-            width: '240px',
-            height: 450,
+            width: '320px',
+            height: 750,
             float: 'left',
             borderRight: '2px solid #f9fafb',
           }}
         >
           <Aside />
         </aside>
-        <Container
+        <Box
           style={{
+            flex: 1,
             float: 'right',
-            width: 'calc(100% - 240px)',
-            height: 450,
+            height: 750,
             background: '#f4f6f8',
           }}
         >
           <Body />
-        </Container>
+        </Box>
       </Card>
     </Container>
   );
