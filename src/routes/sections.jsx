@@ -29,64 +29,90 @@ export default function Router() {
     const ISTOKENEXRIED = useMemo(() => isTokenExpried(teachingCenter?.token), [teachingCenter]);
 
     const routes = useRoutes([
-        {
-            element: (
-                <DashboardLayout>
-                    <Suspense>
-                        <Outlet/>
-                    </Suspense>
-                </DashboardLayout>
-            ),
-            children: [
-                {element: <GroupListPage/>, index: true},
-                {
-                    path: TEACHING_CENTER_DASHBOARD_PATH.TEACHERS_LIST,
-                    element: <TeacherListPage/>,
-                },
-                {
-                    path: TEACHING_CENTER_DASHBOARD_PATH.PUPILS,
-                    element: <PupilsPage/>,
-                },
-                {
-                    path: `${TEACHING_CENTER_DASHBOARD_PATH.TEACHER_DEGREES}/:id`,
-                    element: <TeacherDeggreesPage/>,
-                },
-                {
-                    path: TEACHING_CENTER_DASHBOARD_PATH.SETTINGS,
-                    element: <SettingsPage/>,
-                },
-                {
-                    path: TEACHING_CENTER_DASHBOARD_PATH.GROUP_CREATE,
-                    element: <GroupCreatePage/>,
-                },
-                {
-                    path: `${TEACHING_CENTER_DASHBOARD_PATH.GROUP_EDIT}/:id`,
-                    element: <GroupEditPage/>,
-                },
-                {
-                    path: `${TEACHING_CENTER_DASHBOARD_PATH.GROUP_VIEW}/:id`,
-                    element: <GroupViewPage/>,
-                },
-                {
-                    path: `${TEACHING_CENTER_DASHBOARD_PATH.TOPIC_VIEW}/:id`,
-                    element: <TopicViewPage/>,
-                },
-                {
-                    path: `${TEACHING_CENTER_DASHBOARD_PATH.TOPIC_SECTION_VIEW}/:id`,
-                    element: <TopicSectionViewPage/>,
-                },
-            ],
-        },
+            {
+                element: (
+                    <DashboardLayout>
+                        <Suspense>
+                            <Outlet/>
+                        </Suspense>
+                    </DashboardLayout>
+                ),
+                children: [
+                    {element: <GroupListPage/>, index: true},
+                    {
+                        element: <GroupListPage/>, path: TEACHING_CENTER_DASHBOARD_PATH.GROUPS
+                    },
+                    {
+                        path: TEACHING_CENTER_DASHBOARD_PATH.TEACHERS_LIST,
+                        element:
+                            <TeacherListPage/>,
+                    }
+                    ,
+                    {
+                        path: TEACHING_CENTER_DASHBOARD_PATH.PUPILS,
+                        element:
+                            <PupilsPage/>,
+                    }
+                    ,
+                    {
+                        path: `${TEACHING_CENTER_DASHBOARD_PATH.TEACHER_DEGREES}/:id`,
+                        element:
+                            <TeacherDeggreesPage/>,
+                    }
+                    ,
+                    {
+                        path: TEACHING_CENTER_DASHBOARD_PATH.SETTINGS,
+                        element:
+                            <SettingsPage/>,
+                    }
+                    ,
+                    {
+                        path: TEACHING_CENTER_DASHBOARD_PATH.GROUP_CREATE,
+                        element:
+                            <GroupCreatePage/>,
+                    }
+                    ,
+                    {
+                        path: `${TEACHING_CENTER_DASHBOARD_PATH.GROUP_EDIT}/:id`,
+                        element:
+                            <GroupEditPage/>,
+                    }
+                    ,
+                    {
+                        path: `${TEACHING_CENTER_DASHBOARD_PATH.GROUP_VIEW}/:id`,
+                        element:
+                            <GroupViewPage/>,
+                    }
+                    ,
+                    {
+                        path: `${TEACHING_CENTER_DASHBOARD_PATH.TOPIC_VIEW}/:id`,
+                        element:
+                            <TopicViewPage/>,
+                    }
+                    ,
+                    {
+                        path: `${TEACHING_CENTER_DASHBOARD_PATH.TOPIC_SECTION_VIEW}/:id`,
+                        element:
+                            <TopicSectionViewPage/>,
+                    }
+                    ,
+                ],
+            },
 
-        {
-            path: '404',
-            element: <Page404/>,
-        },
-        {
-            path: '*',
-            element: <Navigate to="/404" replace/>,
-        },
-    ]);
+            {
+                path: '404',
+                element:
+                    <Page404/>,
+            }
+            ,
+            {
+                path: '*',
+                element:
+                    <Navigate to="/404" replace/>,
+            }
+            ,
+        ])
+    ;
 
     return teachingCenter?.isAuthenticated && ISTOKENEXRIED ? routes : <LoginPage/>;
 }
